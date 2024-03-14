@@ -10,7 +10,11 @@ from dagster._core.definitions.asset_checks import AssetChecksDefinition
 from dagster._core.definitions.decorators.asset_check_decorator import (
     multi_asset_check,
 )
-from dagster._core.definitions.metadata import FloatMetadataValue, TimestampMetadataValue
+from dagster._core.definitions.metadata import (
+    FreshnessCheckMetadataSet,
+    JsonMetadataValue,
+    TimestampMetadataValue,
+)
 from dagster._core.definitions.time_window_partitions import TimeWindowPartitionsDefinition
 from dagster._core.execution.context.compute import (
     AssetCheckExecutionContext,
@@ -23,10 +27,7 @@ from .utils import (
     DEADLINE_CRON_METADATA_KEY,
     FRESHNESS_PARAMS_METADATA_KEY,
     FRESHNESS_TIMEZONE_METADATA_KEY,
-    LAST_UPDATED_TIMESTAMP_METADATA_KEY,
     LOWER_BOUND_DELTA_METADATA_KEY,
-    OVERDUE_DEADLINE_TIMESTAMP_METADATA_KEY,
-    OVERDUE_SECONDS_METADATA_KEY,
     asset_to_keys_iterable,
     ensure_no_duplicate_assets,
     get_description_for_freshness_check_result,
@@ -123,20 +124,14 @@ def build_freshness_multi_check(
                 and update_timestamp >= last_update_time_lower_bound.timestamp()
             )
 
-            metadata = {
-                FRESHNESS_PARAMS_METADATA_KEY: params_metadata,
-                OVERDUE_DEADLINE_TIMESTAMP_METADATA_KEY: TimestampMetadataValue(
-                    deadline.timestamp()
-                ),
-            }
-            if not passed:
-                metadata[OVERDUE_SECONDS_METADATA_KEY] = FloatMetadataValue(
-                    current_timestamp - deadline.timestamp()
-                )
-            if update_timestamp:
-                metadata[LAST_UPDATED_TIMESTAMP_METADATA_KEY] = TimestampMetadataValue(
-                    update_timestamp
-                )
+            metadata = FreshnessCheckMetadataSet(
+                freshness_params=JsonMetadataValue(params_metadata),
+                overdue_deadline_timestamp=TimestampMetadataValue(deadline.timestamp()),
+                last_updated_timestamp=TimestampMetadataValue(update_timestamp)
+                if update_timestamp
+                else None,
+                overdue_seconds=(current_timestamp - deadline.timestamp()) if not passed else None,
+            )
 
             yield AssetCheckResult(
                 passed=passed,
@@ -151,7 +146,7 @@ def build_freshness_multi_check(
                 ),
                 severity=severity,
                 asset_key=asset_key,
-                metadata=metadata,
+                metadata={**metadata},
             )
 
     return the_check
