@@ -15,6 +15,8 @@ from typing import (
     Type,
     Union,
     cast,
+    get_args,
+    get_origin,
 )
 
 from pydantic import Field
@@ -1247,9 +1249,27 @@ class NamespacedMetadataSet(ABC, DagsterModel):
             if len(splits) == 2:
                 namespace, key = splits
                 if namespace == cls.namespace() and key in model_fields(cls):
-                    kwargs[key] = value.value if isinstance(value, MetadataValue) else value
+                    kwargs[key] = cls._extract_value(key=key, value=value)
 
         return cls(**kwargs)
+
+    @classmethod
+    def _extract_value(cls, key: str, value: Any) -> Any:
+        """Based on type annotation, potentially coerce the metadata value to its inner value.
+
+        E.g. if the annotation is Optional[float] and the value is FloatMetadataValue, construct
+        the MetadataSet using the inner float.
+        """
+        if isinstance(value, MetadataValue):
+            annotation = model_fields(cls)[key].annotation
+            if annotation is not None:
+                accepted_types: Sequence[Type] = (
+                    get_args(annotation) if get_origin(annotation) is Union else (annotation,)
+                )
+                if type(value) not in accepted_types and type(value.value) in accepted_types:
+                    return value.value
+
+        return value
 
 
 class TableMetadataSet(NamespacedMetadataSet):
