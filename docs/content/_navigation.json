@@ -685,7 +685,7 @@
                 "path": "/dagster-plus/managing-deployments/branch-deployments",
                 "children": [
                   {
-                   "title": "Overview",
+                    "title": "Overview",
                     "path": "/dagster-plus/managing-deployments/branch-deployments"
                   },
                   {
@@ -701,7 +701,7 @@
                     "path": "/dagster-plus/managing-deployments/branch-deployments/using-branch-deployments"
                   },
                   {
-                   "title": "Change Tracking",
+                    "title": "Change Tracking",
                     "path": "/dagster-plus/managing-deployments/branch-deployments/change-tracking"
                   }
                 ]
@@ -1409,6 +1409,10 @@
           {
             "title": "MySQL (dagster-mysql)",
             "path": "/_apidocs/libraries/dagster-mysql"
+          },
+          {
+            "title": "Looker (dagster-looker)",
+            "path": "/_apidocs/libraries/dagster-looker"
           },
           {
             "title": "PagerDuty (dagster-pagerduty)",
