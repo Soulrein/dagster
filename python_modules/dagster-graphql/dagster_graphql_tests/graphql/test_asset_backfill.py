@@ -10,17 +10,25 @@ from dagster import (
     asset,
 )
 from dagster._core.definitions.asset_graph_subset import AssetGraphSubset
+from dagster._core.definitions.backfill_policy import BackfillPolicy
 from dagster._core.definitions.repository_definition.repository_definition import (
     RepositoryDefinition,
 )
+from dagster._core.definitions.unresolved_asset_job_definition import define_asset_job
 from dagster._core.execution.asset_backfill import AssetBackfillData
+from dagster._core.execution.context.compute import AssetExecutionContext
 from dagster._core.instance import DagsterInstance
+from dagster._core.remote_representation.external_data import (
+    external_partition_set_name_for_job_name,
+)
+from dagster._core.storage.io_manager import IOManager
 from dagster._core.test_utils import ensure_dagster_tests_import, instance_for_test
 from dagster_graphql.client.query import LAUNCH_PARTITION_BACKFILL_MUTATION
 from dagster_graphql.test.utils import (
     GqlResult,
     define_out_of_process_context,
     execute_dagster_graphql,
+    infer_repository_selector,
     main_repo_location_name,
 )
 
@@ -61,6 +69,7 @@ SINGLE_BACKFILL_QUERY = """
   query SingleBackfillQuery($backfillId: String!) {
     partitionBackfillOrError(backfillId: $backfillId) {
       ... on PartitionBackfill {
+        status
         partitionStatuses {
           results {
             id
@@ -142,6 +151,35 @@ def get_repo_with_non_partitioned_asset() -> RepositoryDefinition:
 
 def get_repo_with_root_assets_different_partitions() -> RepositoryDefinition:
     return Definitions(assets=root_assets_different_partitions_same_downstream).get_repository_def()
+
+
+def get_repo_with_single_run_backfill_asset_job() -> RepositoryDefinition:
+    partitions_def = StaticPartitionsDefinition(["a", "b"])
+
+    class DummyIOManager(IOManager):
+        def __init__(self):
+            super().__init__()
+            self._db = {}
+
+        def handle_output(self, context, obj) -> None:
+            pass
+
+        def load_input(self, context) -> int:
+            return 1
+
+    @asset(partitions_def=partitions_def, backfill_policy=BackfillPolicy.single_run())
+    def foo(context: AssetExecutionContext):
+        return {"a": 1, "b": 2}
+
+    @asset(partitions_def=partitions_def, backfill_policy=BackfillPolicy.single_run())
+    def bar(context: AssetExecutionContext):
+        return {"a": 1, "b": 2}
+
+    asset_job = define_asset_job("asset_job", [foo, bar])
+
+    return Definitions(
+        assets=[foo, bar], jobs=[asset_job], resources={"io_manager": DummyIOManager()}
+    ).get_repository_def()
 
 
 def test_launch_asset_backfill_read_only_context():
@@ -908,6 +946,40 @@ def test_asset_backfill_error_raised_upon_invalid_params_provided():
                 "partitions_by_assets cannot be used together with asset_selection, selector, or partitionNames"
                 in launch_backfill_result.data["launchPartitionBackfill"]["message"]
             )
+
+
+def test_asset_backfill_asset_job():
+    repo = get_repo_with_single_run_backfill_asset_job()
+    with instance_for_test() as instance:
+        with define_out_of_process_context(
+            __file__, "get_repo_with_single_run_backfill_asset_job", instance
+        ) as context:
+            repository_selector = infer_repository_selector(context)
+            launch_backfill_result = execute_dagster_graphql(
+                context,
+                LAUNCH_PARTITION_BACKFILL_MUTATION,
+                variables={
+                    "backfillParams": {
+                        "selector": {
+                            "repositorySelector": repository_selector,
+                            "partitionSetName": external_partition_set_name_for_job_name(
+                                "asset_job"
+                            ),
+                        },
+                        "partitionNames": ["a", "b"],
+                        # "assetSelection": [{"path": ["foo"]}],
+                    }
+                },
+            )
+            backfill_id, asset_backfill_data = _get_backfill_data(
+                launch_backfill_result, instance, repo
+            )
+            target_subset = asset_backfill_data.target_subset
+            assert target_subset.asset_keys == {AssetKey("foo"), AssetKey("bar")}
+            assert target_subset.get_partitions_subset(AssetKey("foo")).get_partition_keys() == {
+                "a",
+                "b",
+            }
 
 
 def _get_backfill_data(

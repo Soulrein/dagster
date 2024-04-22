@@ -26,6 +26,7 @@ from dagster._config.config_type import ConfigType
 from dagster._config.validate import validate_config
 from dagster._core.definitions.asset_check_spec import AssetCheckKey
 from dagster._core.definitions.asset_selection import AssetSelection
+from dagster._core.definitions.backfill_policy import BackfillPolicy
 from dagster._core.definitions.dependency import (
     Node,
     NodeHandle,
@@ -415,6 +416,15 @@ class JobDefinition(IHasInternalInit):
         A partitions definition defines the set of partition keys the job operates on.
         """
         return None if not self.partitioned_config else self.partitioned_config.partitions_def
+
+    @property
+    def backfill_policy(self) -> Optional[BackfillPolicy]:
+        first_key = next(iter(self.asset_layer.executable_asset_keys), None)
+        if self.partitions_def is None or first_key is None:
+            return None
+        # It is enforced that all assets in a job have the same backfill policy, so we can just take
+        # the first backfill policy.
+        return self.asset_layer.get(first_key).backfill_policy
 
     @property
     def hook_defs(self) -> AbstractSet[HookDefinition]:
