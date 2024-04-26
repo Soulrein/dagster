@@ -2,6 +2,7 @@ import os
 from abc import ABC, abstractmethod
 from datetime import datetime
 from typing import (
+    TYPE_CHECKING,
     AbstractSet,
     Any,
     Callable,
@@ -39,6 +40,16 @@ from dagster._utils.warnings import (
     normalize_renamed_param,
 )
 
+if TYPE_CHECKING:
+    from dagster._core.definitions.assets import AssetsDefinition
+    from dagster._core.definitions.cacheable_assets import CacheableAssetsDefinition
+    from dagster._core.definitions.source_asset import SourceAsset
+
+
+from .source import (  # re-exported
+    SourcePathMetadataSet as SourcePathMetadataSet,
+    source_path_from_fn,
+)
 from .table import (  # re-exported
     TableColumn as TableColumn,
     TableColumnConstraints as TableColumnConstraints,
@@ -69,7 +80,6 @@ MetadataMapping: TypeAlias = Mapping[str, "MetadataValue"]
 RawMetadataMapping: TypeAlias = Mapping[str, RawMetadataValue]
 
 T_Packable = TypeVar("T_Packable", bound=PackableValue, default=PackableValue, covariant=True)
-
 
 # ########################
 # ##### NORMALIZATION
@@ -1311,3 +1321,56 @@ class TableMetadataSet(NamespacedMetadataSet):
     @classmethod
     def namespace(cls) -> str:
         return "dagster"
+
+
+class SourceDataMetadataSet(NamespacedMetadataSet):
+    """Metadata entries that apply to asset definitions and which specify the source code location
+    for the asset.
+    """
+
+    source_paths: List[SourcePathMetadataSet] = []
+
+    @classmethod
+    def namespace(cls) -> str:
+        return "dagster"
+
+
+def _with_code_source_single_definition(
+    assets_def: Union["AssetsDefinition", "SourceAsset", "CacheableAssetsDefinition"],
+) -> Union["AssetsDefinition", "SourceAsset", "CacheableAssetsDefinition"]:
+    from dagster._core.definitions.assets import AssetsDefinition
+
+    if not isinstance(assets_def, AssetsDefinition):
+        return assets_def
+
+    metadata_by_key = dict(assets_def.metadata_by_key) or {}
+
+    from dagster._core.definitions.decorators.op_decorator import DecoratedOpFunction
+
+    base_fn = (
+        assets_def.op.compute_fn.decorated_fn
+        if isinstance(assets_def.op.compute_fn, DecoratedOpFunction)
+        else assets_def.op.compute_fn
+    )
+    source_path = source_path_from_fn(base_fn)
+
+    if source_path:
+        source_metadata = SourceDataMetadataSet(source_paths=[source_path])
+        for key in assets_def.keys:
+            metadata_by_key[key] = {**metadata_by_key.get(key, {}), **source_metadata}
+
+    return assets_def.with_attributes(metadata_by_key=metadata_by_key)
+
+
+def with_code_source(
+    assets_defs: Sequence[Union["AssetsDefinition", "SourceAsset", "CacheableAssetsDefinition"]],
+) -> List[Union["AssetsDefinition", "SourceAsset", "CacheableAssetsDefinition"]]:
+    """Wrapper function which attaches source code metadata to the provided asset definitions.
+
+    Args:
+        *assets (AssetsDefinition): The asset definitions to add source code metadata to.
+
+    Returns:
+        List[AssetsDefinition]: The asset definitions with source code metadata attached.
+    """
+    return [_with_code_source_single_definition(assets_def) for assets_def in assets_defs]
