@@ -2,7 +2,11 @@ import os
 from typing import cast
 
 from dagster import AssetsDefinition, load_assets_from_modules
-from dagster._core.definitions.metadata import SourcePathMetadataSet, with_code_source
+from dagster._core.definitions.metadata import (
+    DEFAULT_SOURCE_FILE_KEY,
+    SourcePathMetadataSet,
+    with_code_source,
+)
 from dagster._utils import file_relative_path
 
 
@@ -57,10 +61,12 @@ def test_asset_code_origins() -> None:
                 assert "dagster/source_paths" in asset.metadata_by_key[key]
                 assert len(asset.metadata_by_key[key]["dagster/source_paths"]) == 1
                 assert isinstance(
-                    asset.metadata_by_key[key]["dagster/source_paths"][0], SourcePathMetadataSet
+                    asset.metadata_by_key[key]["dagster/source_paths"][DEFAULT_SOURCE_FILE_KEY],
+                    SourcePathMetadataSet,
                 )
                 meta = cast(
-                    SourcePathMetadataSet, asset.metadata_by_key[key]["dagster/source_paths"][0]
+                    SourcePathMetadataSet,
+                    asset.metadata_by_key[key]["dagster/source_paths"][DEFAULT_SOURCE_FILE_KEY],
                 )
 
                 assert meta.path_to_module == expected_module_path

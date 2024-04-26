@@ -1323,12 +1323,15 @@ class TableMetadataSet(NamespacedMetadataSet):
         return "dagster"
 
 
+DEFAULT_SOURCE_FILE_KEY = "asset_definition"
+
+
 class SourceDataMetadataSet(NamespacedMetadataSet):
     """Metadata entries that apply to asset definitions and which specify the source code location
     for the asset.
     """
 
-    source_paths: List[SourcePathMetadataSet] = []
+    source_paths: Dict[str, SourcePathMetadataSet] = {}
 
     @classmethod
     def namespace(cls) -> str:
@@ -1355,7 +1358,7 @@ def _with_code_source_single_definition(
     source_path = source_path_from_fn(base_fn)
 
     if source_path:
-        source_metadata = SourceDataMetadataSet(source_paths=[source_path])
+        source_metadata = SourceDataMetadataSet(source_paths={DEFAULT_SOURCE_FILE_KEY: source_path})
         for key in assets_def.keys:
             metadata_by_key[key] = {**metadata_by_key.get(key, {}), **source_metadata}
 
