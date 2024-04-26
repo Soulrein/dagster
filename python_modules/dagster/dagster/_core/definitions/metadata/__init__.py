@@ -1362,6 +1362,7 @@ def _with_code_source_single_definition(
     return assets_def.with_attributes(metadata_by_key=metadata_by_key)
 
 
+@experimental
 def with_code_source(
     assets_defs: Sequence[Union["AssetsDefinition", "SourceAsset", "CacheableAssetsDefinition"]],
 ) -> List[Union["AssetsDefinition", "SourceAsset", "CacheableAssetsDefinition"]]:
