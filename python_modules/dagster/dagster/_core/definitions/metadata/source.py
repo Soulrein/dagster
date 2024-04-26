@@ -10,9 +10,14 @@ from typing import (
 )
 
 import dagster._check as check
-from dagster._annotations import PublicAttr
+from dagster._annotations import PublicAttr, experimental
+from dagster._serdes.serdes import (
+    whitelist_for_serdes,
+)
 
 
+@experimental
+@whitelist_for_serdes
 class SourcePathMetadataSet(
     NamedTuple(
         "_SourcePathMetadataSet",
