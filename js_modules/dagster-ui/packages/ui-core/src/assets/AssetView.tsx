@@ -1,16 +1,7 @@
 import {gql, useQuery} from '@apollo/client';
 // eslint-disable-next-line no-restricted-imports
 import {BreadcrumbProps} from '@blueprintjs/core';
-import {
-  Alert,
-  Box,
-  ErrorBoundary,
-  ExternalAnchorButton,
-  Icon,
-  NonIdealState,
-  Spinner,
-  Tag,
-} from '@dagster-io/ui-components';
+import {Alert, Box, ErrorBoundary, NonIdealState, Spinner, Tag} from '@dagster-io/ui-components';
 import {useContext, useEffect, useMemo} from 'react';
 import {Link, Redirect, useLocation} from 'react-router-dom';
 
@@ -59,6 +50,7 @@ import {
 } from '../asset-graph/Utils';
 import {useAssetGraphData} from '../asset-graph/useAssetGraphData';
 import {StaleReasonsTag} from '../assets/Stale';
+import {CodeLink, CodeLinkData} from '../code-links/CodeLink';
 import {AssetComputeKindTag} from '../graph/OpTags';
 import {JsonMetadataEntry} from '../graphql/types';
 import {useQueryPersistedState} from '../hooks/useQueryPersistedState';
@@ -67,7 +59,6 @@ import {RepositoryLink} from '../nav/RepositoryLink';
 import {PageLoadTrace} from '../performance';
 import {buildRepoAddress} from '../workspace/buildRepoAddress';
 import {workspacePathFromAddress} from '../workspace/workspacePath';
-import { CodeLink, CodeLinkData } from '../code-links/CodeLink';
 
 interface Props {
   assetKey: AssetKey;
@@ -291,9 +282,11 @@ export const AssetView = ({assetKey, trace, headerBreadcrumbs}: Props) => {
   const codeSource = assetMetadata?.find((m) => isCanonicalCodeSourceEntry(m)) as
     | JsonMetadataEntry
     | undefined;
-  const codeSourceUrlsData = codeSource ? JSON.parse(codeSource.jsonString) as CodeLinkData  : undefined;
+  const codeSourceUrlsData = codeSource
+    ? (JSON.parse(codeSource.jsonString) as CodeLinkData)
+    : undefined;
 
-  return(
+  return (
     <Box
       flex={{direction: 'column', grow: 1}}
       style={{height: '100%', width: '100%', overflowY: 'auto'}}
@@ -318,7 +311,7 @@ export const AssetView = ({assetKey, trace, headerBreadcrumbs}: Props) => {
         }
         right={
           <Box style={{margin: '-4px 0'}} flex={{direction: 'row', gap: 8}}>
-            { codeSourceUrlsData  && (
+            {codeSourceUrlsData && Object.keys(codeSourceUrlsData).length > 0 && (
               <CodeLink codeLinkData={codeSourceUrlsData} />
             )}
             {definition && definition.isObservable ? (
@@ -343,7 +336,7 @@ export const AssetView = ({assetKey, trace, headerBreadcrumbs}: Props) => {
       <ErrorBoundary region="page" resetErrorOnChange={[assetKey, params]}>
         {renderContent()}
       </ErrorBoundary>
-    </Box>,
+    </Box>
   );
 };
 

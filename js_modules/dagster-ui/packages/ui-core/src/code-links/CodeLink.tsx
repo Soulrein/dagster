@@ -20,21 +20,16 @@ export const CodeLink = ({codeLinkData}: {codeLinkData: CodeLinkData}) => {
 
   const codeSourceDataByKey =
     codeLinkData &&
-    Object.keys(codeLinkData)
-      .map((key) => {
-        const [pathToModule, pathFromModule, lineNumber] = codeLinkData[key];
-        return [key, pathToModule, pathFromModule, lineNumber];
-      })
-      .reduce(
-        (
-          acc: {[key: string]: {file: string; lineNumber: number}},
-          [key, pathToModule, pathFromModule, lineNumber],
-        ) => {
-          acc[key] = {file: `${pathToModule}/${pathFromModule}`, lineNumber};
-          return acc;
-        },
-        {},
-      );
+    Object.entries(codeLinkData).reduce(
+      (
+        acc: {[key: string]: {file: string; lineNumber: any}},
+        [key, [pathToModule, pathFromModule, lineNumber]],
+      ) => {
+        acc[key] = {file: `${pathToModule}/${pathFromModule}`, lineNumber};
+        return acc;
+      },
+      {},
+    );
 
   const defaultCodeSourceData =
     codeSourceDataByKey && defaultKey ? codeSourceDataByKey[defaultKey] : undefined;
