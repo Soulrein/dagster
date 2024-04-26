@@ -67,7 +67,7 @@ import {RepositoryLink} from '../nav/RepositoryLink';
 import {PageLoadTrace} from '../performance';
 import {buildRepoAddress} from '../workspace/buildRepoAddress';
 import {workspacePathFromAddress} from '../workspace/workspacePath';
-import { CodeLink } from '../code-links/CodeLink';
+import { CodeLink, CodeLinkData } from '../code-links/CodeLink';
 
 interface Props {
   assetKey: AssetKey;
@@ -291,10 +291,7 @@ export const AssetView = ({assetKey, trace, headerBreadcrumbs}: Props) => {
   const codeSource = assetMetadata?.find((m) => isCanonicalCodeSourceEntry(m)) as
     | JsonMetadataEntry
     | undefined;
-  const codeSourceUrlsData = codeSource ? JSON.parse(codeSource.jsonString) : undefined;
-  const firstUrlData = codeSourceUrlsData?.[0];
-  const codeSourceFile = codeSource && `${firstUrlData[0]}/${firstUrlData[1]}`;
-  const codeSourceLine = codeSource && firstUrlData[2] as number;
+  const codeSourceUrlsData = codeSource ? JSON.parse(codeSource.jsonString) as CodeLinkData  : undefined;
 
   return(
     <Box
@@ -321,8 +318,8 @@ export const AssetView = ({assetKey, trace, headerBreadcrumbs}: Props) => {
         }
         right={
           <Box style={{margin: '-4px 0'}} flex={{direction: 'row', gap: 8}}>
-            { codeSourceFile && codeSourceLine && (
-              <CodeLink file={codeSourceFile} lineNumber={codeSourceLine} />
+            { codeSourceUrlsData  && (
+              <CodeLink codeLinkData={codeSourceUrlsData} />
             )}
             {definition && definition.isObservable ? (
               <LaunchAssetObservationButton
