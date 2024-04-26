@@ -53,7 +53,11 @@ import {AssetNodeForGraphQueryFragment} from '../asset-graph/types/useAssetGraph
 import {DagsterTypeSummary} from '../dagstertype/DagsterType';
 import {AssetComputeKindTag} from '../graph/OpTags';
 import {useLaunchPadHooks} from '../launchpad/LaunchpadHooksContext';
-import {TableSchema, TableSchemaAssetContext} from '../metadata/TableSchema';
+import {
+  TableSchema,
+  TableSchemaAssetContext,
+  isCanonicalCodeSourceEntry,
+} from '../metadata/TableSchema';
 import {RepositoryLink} from '../nav/RepositoryLink';
 import {ScheduleOrSensorTag} from '../nav/ScheduleOrSensorTag';
 import {useRepositoryLocationForAddress} from '../nav/useRepositoryLocationForAddress';
@@ -116,6 +120,8 @@ export const AssetNodeOverview = ({
     definition: assetNode,
     definitionLoadTimestamp: assetNodeLoadTimestamp,
   });
+
+  const codeSource = assetMetadata.find((m) => isCanonicalCodeSourceEntry(m));
 
   const renderStatusSection = () => (
     <Box flex={{direction: 'column', gap: 16}}>
@@ -390,6 +396,7 @@ export const AssetNodeOverview = ({
           <LargeCollapsibleSection header="Description" icon="sticky_note">
             {renderDescriptionSection()}
           </LargeCollapsibleSection>
+          {codeSource && <LargeCollapsibleSection header="Code" icon="link" />}
           {tableSchema && (
             <LargeCollapsibleSection header="Columns" icon="view_column">
               <TableSchemaAssetContext.Provider

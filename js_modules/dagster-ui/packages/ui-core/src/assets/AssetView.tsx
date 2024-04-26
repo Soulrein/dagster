@@ -1,12 +1,22 @@
 import {gql, useQuery} from '@apollo/client';
 // eslint-disable-next-line no-restricted-imports
 import {BreadcrumbProps} from '@blueprintjs/core';
-import {Alert, Box, ErrorBoundary, NonIdealState, Spinner, Tag} from '@dagster-io/ui-components';
+import {
+  Alert,
+  Box,
+  ErrorBoundary,
+  ExternalAnchorButton,
+  Icon,
+  NonIdealState,
+  Spinner,
+  Tag,
+} from '@dagster-io/ui-components';
 import {useContext, useEffect, useMemo} from 'react';
 import {Link, Redirect, useLocation} from 'react-router-dom';
 
 import {AssetEvents} from './AssetEvents';
 import {AssetFeatureContext} from './AssetFeatureContext';
+import {metadataForAssetNode} from './AssetMetadata';
 import {ASSET_NODE_DEFINITION_FRAGMENT, AssetNodeDefinition} from './AssetNodeDefinition';
 import {ASSET_NODE_INSTIGATORS_FRAGMENT, AssetNodeInstigatorTag} from './AssetNodeInstigatorTag';
 import {AssetNodeLineage} from './AssetNodeLineage';
@@ -50,11 +60,14 @@ import {
 import {useAssetGraphData} from '../asset-graph/useAssetGraphData';
 import {StaleReasonsTag} from '../assets/Stale';
 import {AssetComputeKindTag} from '../graph/OpTags';
+import {JsonMetadataEntry} from '../graphql/types';
 import {useQueryPersistedState} from '../hooks/useQueryPersistedState';
+import {isCanonicalCodeSourceEntry} from '../metadata/TableSchema';
 import {RepositoryLink} from '../nav/RepositoryLink';
 import {PageLoadTrace} from '../performance';
 import {buildRepoAddress} from '../workspace/buildRepoAddress';
 import {workspacePathFromAddress} from '../workspace/workspacePath';
+import { CodeLink } from '../code-links/CodeLink';
 
 interface Props {
   assetKey: AssetKey;
@@ -274,7 +287,16 @@ export const AssetView = ({assetKey, trace, headerBreadcrumbs}: Props) => {
     refresh,
   );
 
-  return (
+  const assetMetadata = definition && metadataForAssetNode(definition).assetMetadata;
+  const codeSource = assetMetadata?.find((m) => isCanonicalCodeSourceEntry(m)) as
+    | JsonMetadataEntry
+    | undefined;
+  const codeSourceUrlsData = codeSource ? JSON.parse(codeSource.jsonString) : undefined;
+  const firstUrlData = codeSourceUrlsData?.[0];
+  const codeSourceFile = codeSource && `${firstUrlData[0]}/${firstUrlData[1]}`;
+  const codeSourceLine = codeSource && firstUrlData[2] as number;
+
+  return(
     <Box
       flex={{direction: 'column', grow: 1}}
       style={{height: '100%', width: '100%', overflowY: 'auto'}}
@@ -298,7 +320,10 @@ export const AssetView = ({assetKey, trace, headerBreadcrumbs}: Props) => {
           </Box>
         }
         right={
-          <Box style={{margin: '-4px 0'}}>
+          <Box style={{margin: '-4px 0'}} flex={{direction: 'row', gap: 8}}>
+            { codeSourceFile && codeSourceLine && (
+              <CodeLink file={codeSourceFile} lineNumber={codeSourceLine} />
+            )}
             {definition && definition.isObservable ? (
               <LaunchAssetObservationButton
                 primary
@@ -321,7 +346,7 @@ export const AssetView = ({assetKey, trace, headerBreadcrumbs}: Props) => {
       <ErrorBoundary region="page" resetErrorOnChange={[assetKey, params]}>
         {renderContent()}
       </ErrorBoundary>
-    </Box>
+    </Box>,
   );
 };
 
