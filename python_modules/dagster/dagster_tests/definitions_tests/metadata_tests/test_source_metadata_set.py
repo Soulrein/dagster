@@ -10,8 +10,7 @@ def test_source_metadata_set() -> None:
     source_metadata = SourceDataMetadataSet(
         source_paths={
             DEFAULT_SOURCE_FILE_KEY: SourcePathMetadataSet(
-                path_to_module="/Users/dagster/Documents/my_module",
-                path_from_module="assets/my_asset.py",
+                file_path="/Users/dagster/Documents/my_module/assets/my_asset.py",
                 line_number=12,
             )
         }

@@ -22,8 +22,7 @@ class SourcePathMetadataSet(
     NamedTuple(
         "_SourcePathMetadataSet",
         [
-            ("path_to_module", PublicAttr[str]),
-            ("path_from_module", PublicAttr[str]),
+            ("file_path", PublicAttr[str]),
             ("line_number", PublicAttr[int]),
         ],
     )
@@ -32,8 +31,7 @@ class SourcePathMetadataSet(
     filepath and line number for the asset.
     """
 
-    path_to_module: str
-    path_from_module: str
+    file_path: str
     line_number: int
 
 
@@ -55,24 +53,10 @@ def source_path_from_fn(fn: Callable[..., Any]) -> Optional[SourcePathMetadataSe
         origin_file = os.path.abspath(os.path.join(cwd, inspect.getsourcefile(fn)))  # type: ignore
         origin_file = check.not_none(origin_file)
         origin_line = inspect.getsourcelines(fn)[1]
-
-        # Get the base module that the op function is defined in
-        # and find the filepath to that module
-        module = inspect.getmodule(fn)
-        root_module = _get_root_module(module) if module else None
-        path_to_module_root = (
-            os.path.abspath(os.path.dirname(os.path.dirname(root_module.__file__)))
-            if root_module and root_module.__file__
-            else "/"
-        )
-
-        # Figure out where in the module the op function is defined
-        path_from_module_root = os.path.relpath(origin_file, path_to_module_root)
     except TypeError:
         return None
 
     return SourcePathMetadataSet(
-        path_to_module=path_to_module_root,
-        path_from_module=path_from_module_root,
+        file_path=origin_file,
         line_number=origin_line,
     )
