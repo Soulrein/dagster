@@ -1674,8 +1674,6 @@ export type GraphSelector = {
   repositoryName: Scalars['String']['input'];
 };
 
-export type GrapheneSource = LocalFileSource;
-
 export type HandledOutputEvent = DisplayableEvent &
   MessageEvent &
   StepEvent & {
@@ -4964,8 +4962,10 @@ export type SolidStepStatusUnavailableError = Error & {
 export type SourceEntry = {
   __typename: 'SourceEntry';
   key: Scalars['String']['output'];
-  source: GrapheneSource;
+  source: SourceLocation;
 };
+
+export type SourceLocation = LocalFileSource;
 
 export type SourceMetadataEntry = MetadataEntry & {
   __typename: 'SourceMetadataEntry';

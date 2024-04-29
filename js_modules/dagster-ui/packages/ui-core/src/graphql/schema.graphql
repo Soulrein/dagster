@@ -2684,10 +2684,10 @@ type SourceMetadataEntry implements MetadataEntry {
 
 type SourceEntry {
   key: String!
-  source: GrapheneSource!
+  source: SourceLocation!
 }
 
-union GrapheneSource = LocalFileSource
+union SourceLocation = LocalFileSource
 
 type LocalFileSource {
   filePath: String!

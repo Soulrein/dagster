@@ -170,14 +170,15 @@ class GrapheneLocalFileSource(graphene.ObjectType):
         name = "LocalFileSource"
 
 
-class GrapheneSource(graphene.Union):
+class GrapheneSourceLocation(graphene.Union):
     class Meta:
         types = (GrapheneLocalFileSource,)
+        name = "SourceLocation"
 
 
 class GrapheneSourceEntry(graphene.ObjectType):
     key = graphene.NonNull(graphene.String)
-    source = graphene.NonNull(GrapheneSource)
+    source = graphene.NonNull(GrapheneSourceLocation)
 
     class Meta:
         name = "SourceEntry"
