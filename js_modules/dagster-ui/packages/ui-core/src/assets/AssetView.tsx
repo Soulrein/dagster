@@ -50,9 +50,9 @@ import {
 } from '../asset-graph/Utils';
 import {useAssetGraphData} from '../asset-graph/useAssetGraphData';
 import {StaleReasonsTag} from '../assets/Stale';
-import {CodeLink, CodeLinkData} from '../code-links/CodeLink';
+import {CodeLink} from '../code-links/CodeLink';
 import {AssetComputeKindTag} from '../graph/OpTags';
-import {JsonMetadataEntry} from '../graphql/types';
+import {SourceMetadataEntry} from '../graphql/types';
 import {useQueryPersistedState} from '../hooks/useQueryPersistedState';
 import {isCanonicalCodeSourceEntry} from '../metadata/TableSchema';
 import {RepositoryLink} from '../nav/RepositoryLink';
@@ -280,11 +280,8 @@ export const AssetView = ({assetKey, trace, headerBreadcrumbs}: Props) => {
 
   const assetMetadata = definition && metadataForAssetNode(definition).assetMetadata;
   const codeSource = assetMetadata?.find((m) => isCanonicalCodeSourceEntry(m)) as
-    | JsonMetadataEntry
+    | SourceMetadataEntry
     | undefined;
-  const codeSourceUrlsData = codeSource
-    ? (JSON.parse(codeSource.jsonString) as CodeLinkData)
-    : undefined;
 
   return (
     <Box
@@ -311,8 +308,8 @@ export const AssetView = ({assetKey, trace, headerBreadcrumbs}: Props) => {
         }
         right={
           <Box style={{margin: '-4px 0'}} flex={{direction: 'row', gap: 8}}>
-            {codeSourceUrlsData && Object.keys(codeSourceUrlsData).length > 0 && (
-              <CodeLink codeLinkData={codeSourceUrlsData} />
+            {codeSource && Object.keys(codeSource.sources).length > 0 && (
+              <CodeLink codeLinkData={codeSource} />
             )}
             {definition && definition.isObservable ? (
               <LaunchAssetObservationButton

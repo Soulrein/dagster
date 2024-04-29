@@ -258,7 +258,7 @@ export const MetadataEntry = ({
         </Group>
       );
     case 'SourceMetadataEntry':
-      return <>{entry.label}</>;
+      return <>{entry.sources.map(({key, source}) => `${source.filePath}:${source.lineNumber}`)}</>;
     default:
       return assertUnreachable(entry);
   }

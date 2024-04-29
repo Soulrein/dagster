@@ -4,40 +4,40 @@ import {Icon} from '@dagster-io/ui-components/src/components/Icon';
 import * as React from 'react';
 
 import {CodeLinkProtocolContext} from './CodeLinkProtocol';
+import {SourceMetadataEntry} from '../graphql/types';
 
-export type CodeLinkData = {
-  [key: string]: [string, string, number];
-};
-export const CodeLink = ({codeLinkData}: {codeLinkData: CodeLinkData}) => {
+export const CodeLink = ({codeLinkData}: {codeLinkData: SourceMetadataEntry}) => {
   const [codeLinkProtocol, _] = React.useContext(CodeLinkProtocolContext);
 
-  // use asset_definition as key if it's a key in codeSourceUrlsData object, else use the first key alphabetically
-  const defaultKey = codeLinkData
-    ? Object.keys(codeLinkData).includes('asset_definition')
-      ? 'asset_definition'
-      : Object.keys(codeLinkData).sort()[0]
-    : undefined;
+  const sources = codeLinkData.sources;
 
   const codeSourceDataByKey =
     codeLinkData &&
-    Object.entries(codeLinkData).reduce(
-      (acc: {[key: string]: {file: string; lineNumber: any}}, [key, [file, lineNumber]]) => {
-        acc[key] = {file, lineNumber};
+    codeLinkData.sources.reduce(
+      (acc: {[key: string]: {filePath: string; lineNumber: any}}, {key, source}) => {
+        acc[key] = source;
         return acc;
       },
       {},
     );
 
+  // use asset_definition as key if it's a key in codeSourceUrlsData object, else use the first key alphabetically
+  const defaultKey = codeLinkData
+    ? Object.keys(codeSourceDataByKey).includes('asset_definition')
+      ? 'asset_definition'
+      : Object.keys(codeSourceDataByKey).sort()[0]
+    : undefined;
+
   const defaultCodeSourceData =
     codeSourceDataByKey && defaultKey ? codeSourceDataByKey[defaultKey] : undefined;
 
   const otherKeys = codeLinkData
-    ? Object.keys(codeLinkData).filter((key) => key !== defaultKey)
+    ? sources.map(({key}) => key).filter((key) => key !== defaultKey)
     : [];
   const hasMultipleCodeSources = otherKeys.length > 0;
 
   const codeLink = codeLinkProtocol.protocol
-    .replace('{FILE}', defaultCodeSourceData?.file || '')
+    .replace('{FILE}', defaultCodeSourceData?.filePath || '')
     .replace('{LINE}', (defaultCodeSourceData?.lineNumber || '0').toString());
   return (
     <Box flex={{alignItems: 'center'}}>
@@ -67,11 +67,11 @@ export const CodeLink = ({codeLinkData}: {codeLinkData: CodeLinkData}) => {
                   text={`Open ${key} in editor`}
                   onClick={() => {
                     const codeSourceData = codeSourceDataByKey[key] as {
-                      file: string;
+                      filePath: string;
                       lineNumber: number;
                     };
                     const codeLink = codeLinkProtocol.protocol
-                      .replace('{FILE}', codeSourceData.file)
+                      .replace('{FILE}', codeSourceData.filePath)
                       .replace('{LINE}', codeSourceData.lineNumber.toString());
                     window.open(codeLink, '_blank');
                   }}
