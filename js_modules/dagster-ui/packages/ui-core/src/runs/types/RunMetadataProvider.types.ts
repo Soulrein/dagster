@@ -245,6 +245,7 @@ export type RunMetadataProviderMessageFragment_ObjectStoreOperationEvent = {
           label: string;
           description: string | null;
         }
+      | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
       | {
           __typename: 'TableColumnLineageMetadataEntry';
           label: string;

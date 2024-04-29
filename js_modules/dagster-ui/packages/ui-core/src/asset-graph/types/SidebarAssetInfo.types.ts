@@ -71,6 +71,7 @@ export type SidebarAssetFragment = {
         label: string;
         description: string | null;
       }
+    | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
     | {
         __typename: 'TableColumnLineageMetadataEntry';
         label: string;
@@ -829,6 +830,7 @@ export type SidebarAssetFragment = {
                     label: string;
                     description: string | null;
                   }
+                | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
                 | {
                     __typename: 'TableColumnLineageMetadataEntry';
                     label: string;
@@ -2095,6 +2097,7 @@ export type SidebarAssetFragment = {
                     label: string;
                     description: string | null;
                   }
+                | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
                 | {
                     __typename: 'TableColumnLineageMetadataEntry';
                     label: string;
@@ -3361,6 +3364,7 @@ export type SidebarAssetFragment = {
                     label: string;
                     description: string | null;
                   }
+                | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
                 | {
                     __typename: 'TableColumnLineageMetadataEntry';
                     label: string;
@@ -4618,6 +4622,7 @@ export type SidebarAssetFragment = {
               label: string;
               description: string | null;
             }
+          | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
           | {
               __typename: 'TableColumnLineageMetadataEntry';
               label: string;
@@ -5890,6 +5895,7 @@ export type SidebarAssetFragment = {
                     label: string;
                     description: string | null;
                   }
+                | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
                 | {
                     __typename: 'TableColumnLineageMetadataEntry';
                     label: string;
@@ -7156,6 +7162,7 @@ export type SidebarAssetFragment = {
                     label: string;
                     description: string | null;
                   }
+                | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
                 | {
                     __typename: 'TableColumnLineageMetadataEntry';
                     label: string;
@@ -8422,6 +8429,7 @@ export type SidebarAssetFragment = {
                     label: string;
                     description: string | null;
                   }
+                | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
                 | {
                     __typename: 'TableColumnLineageMetadataEntry';
                     label: string;
@@ -9679,6 +9687,7 @@ export type SidebarAssetFragment = {
               label: string;
               description: string | null;
             }
+          | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
           | {
               __typename: 'TableColumnLineageMetadataEntry';
               label: string;
@@ -10951,6 +10960,7 @@ export type SidebarAssetFragment = {
                     label: string;
                     description: string | null;
                   }
+                | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
                 | {
                     __typename: 'TableColumnLineageMetadataEntry';
                     label: string;
@@ -12217,6 +12227,7 @@ export type SidebarAssetFragment = {
                     label: string;
                     description: string | null;
                   }
+                | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
                 | {
                     __typename: 'TableColumnLineageMetadataEntry';
                     label: string;
@@ -13483,6 +13494,7 @@ export type SidebarAssetFragment = {
                     label: string;
                     description: string | null;
                   }
+                | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
                 | {
                     __typename: 'TableColumnLineageMetadataEntry';
                     label: string;
@@ -14740,6 +14752,7 @@ export type SidebarAssetFragment = {
               label: string;
               description: string | null;
             }
+          | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
           | {
               __typename: 'TableColumnLineageMetadataEntry';
               label: string;
@@ -16008,6 +16021,7 @@ export type SidebarAssetQuery = {
               label: string;
               description: string | null;
             }
+          | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
           | {
               __typename: 'TableColumnLineageMetadataEntry';
               label: string;
@@ -16772,6 +16786,11 @@ export type SidebarAssetQuery = {
                           __typename: 'PythonArtifactMetadataEntry';
                           module: string;
                           name: string;
+                          label: string;
+                          description: string | null;
+                        }
+                      | {
+                          __typename: 'SourceMetadataEntry';
                           label: string;
                           description: string | null;
                         }
@@ -18048,6 +18067,11 @@ export type SidebarAssetQuery = {
                           description: string | null;
                         }
                       | {
+                          __typename: 'SourceMetadataEntry';
+                          label: string;
+                          description: string | null;
+                        }
+                      | {
                           __typename: 'TableColumnLineageMetadataEntry';
                           label: string;
                           description: string | null;
@@ -19320,6 +19344,11 @@ export type SidebarAssetQuery = {
                           description: string | null;
                         }
                       | {
+                          __typename: 'SourceMetadataEntry';
+                          label: string;
+                          description: string | null;
+                        }
+                      | {
                           __typename: 'TableColumnLineageMetadataEntry';
                           label: string;
                           description: string | null;
@@ -20582,6 +20611,7 @@ export type SidebarAssetQuery = {
                     label: string;
                     description: string | null;
                   }
+                | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
                 | {
                     __typename: 'TableColumnLineageMetadataEntry';
                     label: string;
@@ -21860,6 +21890,11 @@ export type SidebarAssetQuery = {
                           description: string | null;
                         }
                       | {
+                          __typename: 'SourceMetadataEntry';
+                          label: string;
+                          description: string | null;
+                        }
+                      | {
                           __typename: 'TableColumnLineageMetadataEntry';
                           label: string;
                           description: string | null;
@@ -23128,6 +23163,11 @@ export type SidebarAssetQuery = {
                           __typename: 'PythonArtifactMetadataEntry';
                           module: string;
                           name: string;
+                          label: string;
+                          description: string | null;
+                        }
+                      | {
+                          __typename: 'SourceMetadataEntry';
                           label: string;
                           description: string | null;
                         }
@@ -24404,6 +24444,11 @@ export type SidebarAssetQuery = {
                           description: string | null;
                         }
                       | {
+                          __typename: 'SourceMetadataEntry';
+                          label: string;
+                          description: string | null;
+                        }
+                      | {
                           __typename: 'TableColumnLineageMetadataEntry';
                           label: string;
                           description: string | null;
@@ -25666,6 +25711,7 @@ export type SidebarAssetQuery = {
                     label: string;
                     description: string | null;
                   }
+                | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
                 | {
                     __typename: 'TableColumnLineageMetadataEntry';
                     label: string;
@@ -26944,6 +26990,11 @@ export type SidebarAssetQuery = {
                           description: string | null;
                         }
                       | {
+                          __typename: 'SourceMetadataEntry';
+                          label: string;
+                          description: string | null;
+                        }
+                      | {
                           __typename: 'TableColumnLineageMetadataEntry';
                           label: string;
                           description: string | null;
@@ -28212,6 +28263,11 @@ export type SidebarAssetQuery = {
                           __typename: 'PythonArtifactMetadataEntry';
                           module: string;
                           name: string;
+                          label: string;
+                          description: string | null;
+                        }
+                      | {
+                          __typename: 'SourceMetadataEntry';
                           label: string;
                           description: string | null;
                         }
@@ -29488,6 +29544,11 @@ export type SidebarAssetQuery = {
                           description: string | null;
                         }
                       | {
+                          __typename: 'SourceMetadataEntry';
+                          label: string;
+                          description: string | null;
+                        }
+                      | {
                           __typename: 'TableColumnLineageMetadataEntry';
                           label: string;
                           description: string | null;
@@ -30750,6 +30811,7 @@ export type SidebarAssetQuery = {
                     label: string;
                     description: string | null;
                   }
+                | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
                 | {
                     __typename: 'TableColumnLineageMetadataEntry';
                     label: string;

@@ -90,6 +90,7 @@ export type AssetMaterializationFragment = {
         label: string;
         description: string | null;
       }
+    | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
     | {
         __typename: 'TableColumnLineageMetadataEntry';
         label: string;
@@ -254,6 +255,7 @@ export type AssetObservationFragment = {
         label: string;
         description: string | null;
       }
+    | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
     | {
         __typename: 'TableColumnLineageMetadataEntry';
         label: string;
@@ -437,6 +439,7 @@ export type AssetEventsQuery = {
                 label: string;
                 description: string | null;
               }
+            | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
             | {
                 __typename: 'TableColumnLineageMetadataEntry';
                 label: string;
@@ -615,6 +618,7 @@ export type AssetEventsQuery = {
                 label: string;
                 description: string | null;
               }
+            | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
             | {
                 __typename: 'TableColumnLineageMetadataEntry';
                 label: string;

@@ -118,6 +118,7 @@ export type AssetPartitionDetailQuery = {
                 label: string;
                 description: string | null;
               }
+            | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
             | {
                 __typename: 'TableColumnLineageMetadataEntry';
                 label: string;
@@ -301,6 +302,7 @@ export type AssetPartitionDetailQuery = {
                 label: string;
                 description: string | null;
               }
+            | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
             | {
                 __typename: 'TableColumnLineageMetadataEntry';
                 label: string;

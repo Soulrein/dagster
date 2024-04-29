@@ -86,6 +86,7 @@ export type AssetCheckExecutionFragment = {
           label: string;
           description: string | null;
         }
+      | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
       | {
           __typename: 'TableColumnLineageMetadataEntry';
           label: string;
@@ -251,6 +252,7 @@ export type AssetCheckDetailsQuery = {
             label: string;
             description: string | null;
           }
+        | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
         | {
             __typename: 'TableColumnLineageMetadataEntry';
             label: string;

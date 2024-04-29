@@ -89,6 +89,12 @@ export type MetadataEntryFragment_PythonArtifactMetadataEntry = {
   description: string | null;
 };
 
+export type MetadataEntryFragment_SourceMetadataEntry = {
+  __typename: 'SourceMetadataEntry';
+  label: string;
+  description: string | null;
+};
+
 export type MetadataEntryFragment_TableColumnLineageMetadataEntry = {
   __typename: 'TableColumnLineageMetadataEntry';
   label: string;
@@ -186,6 +192,7 @@ export type MetadataEntryFragment =
   | MetadataEntryFragment_PathMetadataEntry
   | MetadataEntryFragment_PipelineRunMetadataEntry
   | MetadataEntryFragment_PythonArtifactMetadataEntry
+  | MetadataEntryFragment_SourceMetadataEntry
   | MetadataEntryFragment_TableColumnLineageMetadataEntry
   | MetadataEntryFragment_TableMetadataEntry
   | MetadataEntryFragment_TableSchemaMetadataEntry

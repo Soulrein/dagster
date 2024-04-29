@@ -68,6 +68,7 @@ export type TypeExplorerFragment_ListDagsterType = {
         label: string;
         description: string | null;
       }
+    | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
     | {
         __typename: 'TableColumnLineageMetadataEntry';
         label: string;
@@ -1301,6 +1302,7 @@ export type TypeExplorerFragment_NullableDagsterType = {
         label: string;
         description: string | null;
       }
+    | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
     | {
         __typename: 'TableColumnLineageMetadataEntry';
         label: string;
@@ -2534,6 +2536,7 @@ export type TypeExplorerFragment_RegularDagsterType = {
         label: string;
         description: string | null;
       }
+    | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
     | {
         __typename: 'TableColumnLineageMetadataEntry';
         label: string;

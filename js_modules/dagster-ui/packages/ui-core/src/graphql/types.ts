@@ -178,6 +178,7 @@ export type AssetCheckEvaluation = {
     | PathMetadataEntry
     | PipelineRunMetadataEntry
     | PythonArtifactMetadataEntry
+    | SourceMetadataEntry
     | TableColumnLineageMetadataEntry
     | TableMetadataEntry
     | TableSchemaMetadataEntry
@@ -457,6 +458,7 @@ export type AssetNode = {
     | PathMetadataEntry
     | PipelineRunMetadataEntry
     | PythonArtifactMetadataEntry
+    | SourceMetadataEntry
     | TableColumnLineageMetadataEntry
     | TableMetadataEntry
     | TableSchemaMetadataEntry
@@ -1049,6 +1051,7 @@ export type DagsterType = {
     | PathMetadataEntry
     | PipelineRunMetadataEntry
     | PythonArtifactMetadataEntry
+    | SourceMetadataEntry
     | TableColumnLineageMetadataEntry
     | TableMetadataEntry
     | TableSchemaMetadataEntry
@@ -1142,6 +1145,7 @@ export type DisplayableEvent = {
     | PathMetadataEntry
     | PipelineRunMetadataEntry
     | PythonArtifactMetadataEntry
+    | SourceMetadataEntry
     | TableColumnLineageMetadataEntry
     | TableMetadataEntry
     | TableSchemaMetadataEntry
@@ -1217,6 +1221,7 @@ export type EngineEvent = DisplayableEvent &
       | PathMetadataEntry
       | PipelineRunMetadataEntry
       | PythonArtifactMetadataEntry
+      | SourceMetadataEntry
       | TableColumnLineageMetadataEntry
       | TableMetadataEntry
       | TableSchemaMetadataEntry
@@ -1456,6 +1461,7 @@ export type ExecutionStepOutputEvent = DisplayableEvent &
       | PathMetadataEntry
       | PipelineRunMetadataEntry
       | PythonArtifactMetadataEntry
+      | SourceMetadataEntry
       | TableColumnLineageMetadataEntry
       | TableMetadataEntry
       | TableSchemaMetadataEntry
@@ -1556,6 +1562,7 @@ export type ExpectationResult = DisplayableEvent & {
     | PathMetadataEntry
     | PipelineRunMetadataEntry
     | PythonArtifactMetadataEntry
+    | SourceMetadataEntry
     | TableColumnLineageMetadataEntry
     | TableMetadataEntry
     | TableSchemaMetadataEntry
@@ -1583,6 +1590,7 @@ export type FailureMetadata = DisplayableEvent & {
     | PathMetadataEntry
     | PipelineRunMetadataEntry
     | PythonArtifactMetadataEntry
+    | SourceMetadataEntry
     | TableColumnLineageMetadataEntry
     | TableMetadataEntry
     | TableSchemaMetadataEntry
@@ -1666,6 +1674,8 @@ export type GraphSelector = {
   repositoryName: Scalars['String']['input'];
 };
 
+export type GrapheneSource = LocalFileSource;
+
 export type HandledOutputEvent = DisplayableEvent &
   MessageEvent &
   StepEvent & {
@@ -1689,6 +1699,7 @@ export type HandledOutputEvent = DisplayableEvent &
       | PathMetadataEntry
       | PipelineRunMetadataEntry
       | PythonArtifactMetadataEntry
+      | SourceMetadataEntry
       | TableColumnLineageMetadataEntry
       | TableMetadataEntry
       | TableSchemaMetadataEntry
@@ -1759,6 +1770,7 @@ export type IPipelineSnapshot = {
     | PathMetadataEntry
     | PipelineRunMetadataEntry
     | PythonArtifactMetadataEntry
+    | SourceMetadataEntry
     | TableColumnLineageMetadataEntry
     | TableMetadataEntry
     | TableSchemaMetadataEntry
@@ -1829,6 +1841,7 @@ export type InputDefinition = {
     | PathMetadataEntry
     | PipelineRunMetadataEntry
     | PythonArtifactMetadataEntry
+    | SourceMetadataEntry
     | TableColumnLineageMetadataEntry
     | TableMetadataEntry
     | TableSchemaMetadataEntry
@@ -2051,6 +2064,7 @@ export type Job = IPipelineSnapshot &
       | PathMetadataEntry
       | PipelineRunMetadataEntry
       | PythonArtifactMetadataEntry
+      | SourceMetadataEntry
       | TableColumnLineageMetadataEntry
       | TableMetadataEntry
       | TableSchemaMetadataEntry
@@ -2240,6 +2254,7 @@ export type ListDagsterType = DagsterType &
       | PathMetadataEntry
       | PipelineRunMetadataEntry
       | PythonArtifactMetadataEntry
+      | SourceMetadataEntry
       | TableColumnLineageMetadataEntry
       | TableMetadataEntry
       | TableSchemaMetadataEntry
@@ -2284,6 +2299,7 @@ export type LoadedInputEvent = DisplayableEvent &
       | PathMetadataEntry
       | PipelineRunMetadataEntry
       | PythonArtifactMetadataEntry
+      | SourceMetadataEntry
       | TableColumnLineageMetadataEntry
       | TableMetadataEntry
       | TableSchemaMetadataEntry
@@ -2298,6 +2314,12 @@ export type LoadedInputEvent = DisplayableEvent &
     upstreamOutputName: Maybe<Scalars['String']['output']>;
     upstreamStepKey: Maybe<Scalars['String']['output']>;
   };
+
+export type LocalFileSource = {
+  __typename: 'LocalFileSource';
+  filePath: Scalars['String']['output'];
+  lineNumber: Scalars['Int']['output'];
+};
 
 export type LocationStateChangeEvent = {
   __typename: 'LocationStateChangeEvent';
@@ -2450,6 +2472,7 @@ export type MaterializationEvent = DisplayableEvent &
       | PathMetadataEntry
       | PipelineRunMetadataEntry
       | PythonArtifactMetadataEntry
+      | SourceMetadataEntry
       | TableColumnLineageMetadataEntry
       | TableMetadataEntry
       | TableSchemaMetadataEntry
@@ -2827,6 +2850,7 @@ export type NullableDagsterType = DagsterType &
       | PathMetadataEntry
       | PipelineRunMetadataEntry
       | PythonArtifactMetadataEntry
+      | SourceMetadataEntry
       | TableColumnLineageMetadataEntry
       | TableMetadataEntry
       | TableSchemaMetadataEntry
@@ -2877,6 +2901,7 @@ export type ObjectStoreOperationResult = DisplayableEvent & {
     | PathMetadataEntry
     | PipelineRunMetadataEntry
     | PythonArtifactMetadataEntry
+    | SourceMetadataEntry
     | TableColumnLineageMetadataEntry
     | TableMetadataEntry
     | TableSchemaMetadataEntry
@@ -2917,6 +2942,7 @@ export type ObservationEvent = DisplayableEvent &
       | PathMetadataEntry
       | PipelineRunMetadataEntry
       | PythonArtifactMetadataEntry
+      | SourceMetadataEntry
       | TableColumnLineageMetadataEntry
       | TableMetadataEntry
       | TableSchemaMetadataEntry
@@ -2958,6 +2984,7 @@ export type OutputDefinition = {
     | PathMetadataEntry
     | PipelineRunMetadataEntry
     | PythonArtifactMetadataEntry
+    | SourceMetadataEntry
     | TableColumnLineageMetadataEntry
     | TableMetadataEntry
     | TableSchemaMetadataEntry
@@ -3278,6 +3305,7 @@ export type Pipeline = IPipelineSnapshot &
       | PathMetadataEntry
       | PipelineRunMetadataEntry
       | PythonArtifactMetadataEntry
+      | SourceMetadataEntry
       | TableColumnLineageMetadataEntry
       | TableMetadataEntry
       | TableSchemaMetadataEntry
@@ -3504,6 +3532,7 @@ export type PipelineSnapshot = IPipelineSnapshot &
       | PathMetadataEntry
       | PipelineRunMetadataEntry
       | PythonArtifactMetadataEntry
+      | SourceMetadataEntry
       | TableColumnLineageMetadataEntry
       | TableMetadataEntry
       | TableSchemaMetadataEntry
@@ -3933,6 +3962,7 @@ export type RegularDagsterType = DagsterType & {
     | PathMetadataEntry
     | PipelineRunMetadataEntry
     | PythonArtifactMetadataEntry
+    | SourceMetadataEntry
     | TableColumnLineageMetadataEntry
     | TableMetadataEntry
     | TableSchemaMetadataEntry
@@ -4152,6 +4182,7 @@ export type ResourceInitFailureEvent = DisplayableEvent &
       | PathMetadataEntry
       | PipelineRunMetadataEntry
       | PythonArtifactMetadataEntry
+      | SourceMetadataEntry
       | TableColumnLineageMetadataEntry
       | TableMetadataEntry
       | TableSchemaMetadataEntry
@@ -4190,6 +4221,7 @@ export type ResourceInitStartedEvent = DisplayableEvent &
       | PathMetadataEntry
       | PipelineRunMetadataEntry
       | PythonArtifactMetadataEntry
+      | SourceMetadataEntry
       | TableColumnLineageMetadataEntry
       | TableMetadataEntry
       | TableSchemaMetadataEntry
@@ -4228,6 +4260,7 @@ export type ResourceInitSuccessEvent = DisplayableEvent &
       | PathMetadataEntry
       | PipelineRunMetadataEntry
       | PythonArtifactMetadataEntry
+      | SourceMetadataEntry
       | TableColumnLineageMetadataEntry
       | TableMetadataEntry
       | TableSchemaMetadataEntry
@@ -4928,6 +4961,19 @@ export type SolidStepStatusUnavailableError = Error & {
   message: Scalars['String']['output'];
 };
 
+export type SourceEntry = {
+  __typename: 'SourceEntry';
+  key: Scalars['String']['output'];
+  source: GrapheneSource;
+};
+
+export type SourceMetadataEntry = MetadataEntry & {
+  __typename: 'SourceMetadataEntry';
+  description: Maybe<Scalars['String']['output']>;
+  label: Scalars['String']['output'];
+  sources: Array<SourceEntry>;
+};
+
 export type SpecificPartitionAssetConditionEvaluationNode = {
   __typename: 'SpecificPartitionAssetConditionEvaluationNode';
   childUniqueIds: Array<Scalars['String']['output']>;
@@ -4945,6 +4991,7 @@ export type SpecificPartitionAssetConditionEvaluationNode = {
     | PathMetadataEntry
     | PipelineRunMetadataEntry
     | PythonArtifactMetadataEntry
+    | SourceMetadataEntry
     | TableColumnLineageMetadataEntry
     | TableMetadataEntry
     | TableSchemaMetadataEntry
@@ -5050,6 +5097,7 @@ export type StepWorkerStartedEvent = DisplayableEvent &
       | PathMetadataEntry
       | PipelineRunMetadataEntry
       | PythonArtifactMetadataEntry
+      | SourceMetadataEntry
       | TableColumnLineageMetadataEntry
       | TableMetadataEntry
       | TableSchemaMetadataEntry
@@ -5088,6 +5136,7 @@ export type StepWorkerStartingEvent = DisplayableEvent &
       | PathMetadataEntry
       | PipelineRunMetadataEntry
       | PythonArtifactMetadataEntry
+      | SourceMetadataEntry
       | TableColumnLineageMetadataEntry
       | TableMetadataEntry
       | TableSchemaMetadataEntry
@@ -5332,6 +5381,7 @@ export type TypeCheck = DisplayableEvent & {
     | PathMetadataEntry
     | PipelineRunMetadataEntry
     | PythonArtifactMetadataEntry
+    | SourceMetadataEntry
     | TableColumnLineageMetadataEntry
     | TableMetadataEntry
     | TableSchemaMetadataEntry
@@ -5371,6 +5421,7 @@ export type UnpartitionedAssetConditionEvaluationNode = {
     | PathMetadataEntry
     | PipelineRunMetadataEntry
     | PythonArtifactMetadataEntry
+    | SourceMetadataEntry
     | TableColumnLineageMetadataEntry
     | TableMetadataEntry
     | TableSchemaMetadataEntry
@@ -9290,6 +9341,19 @@ export const buildLoadedInputEvent = (
       overrides && overrides.hasOwnProperty('upstreamStepKey')
         ? overrides.upstreamStepKey!
         : 'debitis',
+  };
+};
+
+export const buildLocalFileSource = (
+  overrides?: Partial<LocalFileSource>,
+  _relationshipsToOmit: Set<string> = new Set(),
+): {__typename: 'LocalFileSource'} & LocalFileSource => {
+  const relationshipsToOmit: Set<string> = new Set(_relationshipsToOmit);
+  relationshipsToOmit.add('LocalFileSource');
+  return {
+    __typename: 'LocalFileSource',
+    filePath: overrides && overrides.hasOwnProperty('filePath') ? overrides.filePath! : 'sequi',
+    lineNumber: overrides && overrides.hasOwnProperty('lineNumber') ? overrides.lineNumber! : 9271,
   };
 };
 
@@ -13853,6 +13917,41 @@ export const buildSolidStepStatusUnavailableError = (
   return {
     __typename: 'SolidStepStatusUnavailableError',
     message: overrides && overrides.hasOwnProperty('message') ? overrides.message! : 'accusantium',
+  };
+};
+
+export const buildSourceEntry = (
+  overrides?: Partial<SourceEntry>,
+  _relationshipsToOmit: Set<string> = new Set(),
+): {__typename: 'SourceEntry'} & SourceEntry => {
+  const relationshipsToOmit: Set<string> = new Set(_relationshipsToOmit);
+  relationshipsToOmit.add('SourceEntry');
+  return {
+    __typename: 'SourceEntry',
+    key: overrides && overrides.hasOwnProperty('key') ? overrides.key! : 'debitis',
+    source:
+      overrides && overrides.hasOwnProperty('source')
+        ? overrides.source!
+        : relationshipsToOmit.has('LocalFileSource')
+        ? ({} as LocalFileSource)
+        : buildLocalFileSource({}, relationshipsToOmit),
+  };
+};
+
+export const buildSourceMetadataEntry = (
+  overrides?: Partial<SourceMetadataEntry>,
+  _relationshipsToOmit: Set<string> = new Set(),
+): {__typename: 'SourceMetadataEntry'} & SourceMetadataEntry => {
+  const relationshipsToOmit: Set<string> = new Set(_relationshipsToOmit);
+  relationshipsToOmit.add('SourceMetadataEntry');
+  return {
+    __typename: 'SourceMetadataEntry',
+    description:
+      overrides && overrides.hasOwnProperty('description')
+        ? overrides.description!
+        : 'exercitationem',
+    label: overrides && overrides.hasOwnProperty('label') ? overrides.label! : 'placeat',
+    sources: overrides && overrides.hasOwnProperty('sources') ? overrides.sources! : [],
   };
 };
 

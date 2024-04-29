@@ -95,6 +95,7 @@ export type DagsterTypeFragment_ListDagsterType = {
               label: string;
               description: string | null;
             }
+          | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
           | {
               __typename: 'TableColumnLineageMetadataEntry';
               label: string;
@@ -1356,6 +1357,7 @@ export type DagsterTypeFragment_ListDagsterType = {
               label: string;
               description: string | null;
             }
+          | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
           | {
               __typename: 'TableColumnLineageMetadataEntry';
               label: string;
@@ -2617,6 +2619,7 @@ export type DagsterTypeFragment_ListDagsterType = {
               label: string;
               description: string | null;
             }
+          | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
           | {
               __typename: 'TableColumnLineageMetadataEntry';
               label: string;
@@ -3859,6 +3862,7 @@ export type DagsterTypeFragment_ListDagsterType = {
         label: string;
         description: string | null;
       }
+    | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
     | {
         __typename: 'TableColumnLineageMetadataEntry';
         label: string;
@@ -5119,6 +5123,7 @@ export type DagsterTypeFragment_NullableDagsterType = {
               label: string;
               description: string | null;
             }
+          | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
           | {
               __typename: 'TableColumnLineageMetadataEntry';
               label: string;
@@ -6380,6 +6385,7 @@ export type DagsterTypeFragment_NullableDagsterType = {
               label: string;
               description: string | null;
             }
+          | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
           | {
               __typename: 'TableColumnLineageMetadataEntry';
               label: string;
@@ -7641,6 +7647,7 @@ export type DagsterTypeFragment_NullableDagsterType = {
               label: string;
               description: string | null;
             }
+          | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
           | {
               __typename: 'TableColumnLineageMetadataEntry';
               label: string;
@@ -8883,6 +8890,7 @@ export type DagsterTypeFragment_NullableDagsterType = {
         label: string;
         description: string | null;
       }
+    | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
     | {
         __typename: 'TableColumnLineageMetadataEntry';
         label: string;
@@ -10143,6 +10151,7 @@ export type DagsterTypeFragment_RegularDagsterType = {
               label: string;
               description: string | null;
             }
+          | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
           | {
               __typename: 'TableColumnLineageMetadataEntry';
               label: string;
@@ -11404,6 +11413,7 @@ export type DagsterTypeFragment_RegularDagsterType = {
               label: string;
               description: string | null;
             }
+          | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
           | {
               __typename: 'TableColumnLineageMetadataEntry';
               label: string;
@@ -12665,6 +12675,7 @@ export type DagsterTypeFragment_RegularDagsterType = {
               label: string;
               description: string | null;
             }
+          | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
           | {
               __typename: 'TableColumnLineageMetadataEntry';
               label: string;
@@ -13907,6 +13918,7 @@ export type DagsterTypeFragment_RegularDagsterType = {
         label: string;
         description: string | null;
       }
+    | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
     | {
         __typename: 'TableColumnLineageMetadataEntry';
         label: string;
@@ -15151,6 +15163,7 @@ export type InnerDagsterTypeFragment_ListDagsterType = {
         label: string;
         description: string | null;
       }
+    | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
     | {
         __typename: 'TableColumnLineageMetadataEntry';
         label: string;
@@ -16390,6 +16403,7 @@ export type InnerDagsterTypeFragment_NullableDagsterType = {
         label: string;
         description: string | null;
       }
+    | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
     | {
         __typename: 'TableColumnLineageMetadataEntry';
         label: string;
@@ -17629,6 +17643,7 @@ export type InnerDagsterTypeFragment_RegularDagsterType = {
         label: string;
         description: string | null;
       }
+    | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
     | {
         __typename: 'TableColumnLineageMetadataEntry';
         label: string;

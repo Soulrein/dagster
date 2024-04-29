@@ -725,6 +725,7 @@ export type AssetViewDefinitionQuery = {
                 label: string;
                 description: string | null;
               }
+            | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
             | {
                 __typename: 'TableColumnLineageMetadataEntry';
                 label: string;
@@ -899,6 +900,11 @@ export type AssetViewDefinitionQuery = {
                             __typename: 'PythonArtifactMetadataEntry';
                             module: string;
                             name: string;
+                            label: string;
+                            description: string | null;
+                          }
+                        | {
+                            __typename: 'SourceMetadataEntry';
                             label: string;
                             description: string | null;
                           }
@@ -2179,6 +2185,11 @@ export type AssetViewDefinitionQuery = {
                             description: string | null;
                           }
                         | {
+                            __typename: 'SourceMetadataEntry';
+                            label: string;
+                            description: string | null;
+                          }
+                        | {
                             __typename: 'TableColumnLineageMetadataEntry';
                             label: string;
                             description: string | null;
@@ -3455,6 +3466,11 @@ export type AssetViewDefinitionQuery = {
                             description: string | null;
                           }
                         | {
+                            __typename: 'SourceMetadataEntry';
+                            label: string;
+                            description: string | null;
+                          }
+                        | {
                             __typename: 'TableColumnLineageMetadataEntry';
                             label: string;
                             description: string | null;
@@ -4717,6 +4733,7 @@ export type AssetViewDefinitionQuery = {
                       label: string;
                       description: string | null;
                     }
+                  | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
                   | {
                       __typename: 'TableColumnLineageMetadataEntry';
                       label: string;
@@ -6002,6 +6019,11 @@ export type AssetViewDefinitionQuery = {
                             description: string | null;
                           }
                         | {
+                            __typename: 'SourceMetadataEntry';
+                            label: string;
+                            description: string | null;
+                          }
+                        | {
                             __typename: 'TableColumnLineageMetadataEntry';
                             label: string;
                             description: string | null;
@@ -7274,6 +7296,11 @@ export type AssetViewDefinitionQuery = {
                             __typename: 'PythonArtifactMetadataEntry';
                             module: string;
                             name: string;
+                            label: string;
+                            description: string | null;
+                          }
+                        | {
+                            __typename: 'SourceMetadataEntry';
                             label: string;
                             description: string | null;
                           }
@@ -8554,6 +8581,11 @@ export type AssetViewDefinitionQuery = {
                             description: string | null;
                           }
                         | {
+                            __typename: 'SourceMetadataEntry';
+                            label: string;
+                            description: string | null;
+                          }
+                        | {
                             __typename: 'TableColumnLineageMetadataEntry';
                             label: string;
                             description: string | null;
@@ -9816,6 +9848,7 @@ export type AssetViewDefinitionQuery = {
                       label: string;
                       description: string | null;
                     }
+                  | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
                   | {
                       __typename: 'TableColumnLineageMetadataEntry';
                       label: string;
@@ -11101,6 +11134,11 @@ export type AssetViewDefinitionQuery = {
                             description: string | null;
                           }
                         | {
+                            __typename: 'SourceMetadataEntry';
+                            label: string;
+                            description: string | null;
+                          }
+                        | {
                             __typename: 'TableColumnLineageMetadataEntry';
                             label: string;
                             description: string | null;
@@ -12373,6 +12411,11 @@ export type AssetViewDefinitionQuery = {
                             __typename: 'PythonArtifactMetadataEntry';
                             module: string;
                             name: string;
+                            label: string;
+                            description: string | null;
+                          }
+                        | {
+                            __typename: 'SourceMetadataEntry';
                             label: string;
                             description: string | null;
                           }
@@ -13653,6 +13696,11 @@ export type AssetViewDefinitionQuery = {
                             description: string | null;
                           }
                         | {
+                            __typename: 'SourceMetadataEntry';
+                            label: string;
+                            description: string | null;
+                          }
+                        | {
                             __typename: 'TableColumnLineageMetadataEntry';
                             label: string;
                             description: string | null;
@@ -14915,6 +14963,7 @@ export type AssetViewDefinitionQuery = {
                       label: string;
                       description: string | null;
                     }
+                  | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
                   | {
                       __typename: 'TableColumnLineageMetadataEntry';
                       label: string;
@@ -16800,6 +16849,7 @@ export type AssetViewDefinitionNodeFragment = {
         label: string;
         description: string | null;
       }
+    | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
     | {
         __typename: 'TableColumnLineageMetadataEntry';
         label: string;
@@ -16963,6 +17013,7 @@ export type AssetViewDefinitionNodeFragment = {
                     label: string;
                     description: string | null;
                   }
+                | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
                 | {
                     __typename: 'TableColumnLineageMetadataEntry';
                     label: string;
@@ -18229,6 +18280,7 @@ export type AssetViewDefinitionNodeFragment = {
                     label: string;
                     description: string | null;
                   }
+                | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
                 | {
                     __typename: 'TableColumnLineageMetadataEntry';
                     label: string;
@@ -19495,6 +19547,7 @@ export type AssetViewDefinitionNodeFragment = {
                     label: string;
                     description: string | null;
                   }
+                | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
                 | {
                     __typename: 'TableColumnLineageMetadataEntry';
                     label: string;
@@ -20752,6 +20805,7 @@ export type AssetViewDefinitionNodeFragment = {
               label: string;
               description: string | null;
             }
+          | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
           | {
               __typename: 'TableColumnLineageMetadataEntry';
               label: string;
@@ -22024,6 +22078,7 @@ export type AssetViewDefinitionNodeFragment = {
                     label: string;
                     description: string | null;
                   }
+                | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
                 | {
                     __typename: 'TableColumnLineageMetadataEntry';
                     label: string;
@@ -23290,6 +23345,7 @@ export type AssetViewDefinitionNodeFragment = {
                     label: string;
                     description: string | null;
                   }
+                | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
                 | {
                     __typename: 'TableColumnLineageMetadataEntry';
                     label: string;
@@ -24556,6 +24612,7 @@ export type AssetViewDefinitionNodeFragment = {
                     label: string;
                     description: string | null;
                   }
+                | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
                 | {
                     __typename: 'TableColumnLineageMetadataEntry';
                     label: string;
@@ -25813,6 +25870,7 @@ export type AssetViewDefinitionNodeFragment = {
               label: string;
               description: string | null;
             }
+          | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
           | {
               __typename: 'TableColumnLineageMetadataEntry';
               label: string;
@@ -27085,6 +27143,7 @@ export type AssetViewDefinitionNodeFragment = {
                     label: string;
                     description: string | null;
                   }
+                | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
                 | {
                     __typename: 'TableColumnLineageMetadataEntry';
                     label: string;
@@ -28351,6 +28410,7 @@ export type AssetViewDefinitionNodeFragment = {
                     label: string;
                     description: string | null;
                   }
+                | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
                 | {
                     __typename: 'TableColumnLineageMetadataEntry';
                     label: string;
@@ -29617,6 +29677,7 @@ export type AssetViewDefinitionNodeFragment = {
                     label: string;
                     description: string | null;
                   }
+                | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
                 | {
                     __typename: 'TableColumnLineageMetadataEntry';
                     label: string;
@@ -30874,6 +30935,7 @@ export type AssetViewDefinitionNodeFragment = {
               label: string;
               description: string | null;
             }
+          | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
           | {
               __typename: 'TableColumnLineageMetadataEntry';
               label: string;

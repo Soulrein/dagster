@@ -137,6 +137,7 @@ export type PipelineRunLogsSubscription = {
                       label: string;
                       description: string | null;
                     }
+                  | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
                   | {
                       __typename: 'TableColumnLineageMetadataEntry';
                       label: string;
@@ -323,6 +324,7 @@ export type PipelineRunLogsSubscription = {
                     label: string;
                     description: string | null;
                   }
+                | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
                 | {
                     __typename: 'TableColumnLineageMetadataEntry';
                     label: string;
@@ -506,6 +508,7 @@ export type PipelineRunLogsSubscription = {
                       label: string;
                       description: string | null;
                     }
+                  | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
                   | {
                       __typename: 'TableColumnLineageMetadataEntry';
                       label: string;
@@ -676,6 +679,7 @@ export type PipelineRunLogsSubscription = {
                       label: string;
                       description: string | null;
                     }
+                  | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
                   | {
                       __typename: 'TableColumnLineageMetadataEntry';
                       label: string;
@@ -843,6 +847,7 @@ export type PipelineRunLogsSubscription = {
                     label: string;
                     description: string | null;
                   }
+                | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
                 | {
                     __typename: 'TableColumnLineageMetadataEntry';
                     label: string;
@@ -999,6 +1004,7 @@ export type PipelineRunLogsSubscription = {
                       label: string;
                       description: string | null;
                     }
+                  | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
                   | {
                       __typename: 'TableColumnLineageMetadataEntry';
                       label: string;
@@ -1222,6 +1228,7 @@ export type PipelineRunLogsSubscription = {
                     label: string;
                     description: string | null;
                   }
+                | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
                 | {
                     __typename: 'TableColumnLineageMetadataEntry';
                     label: string;
@@ -1425,6 +1432,7 @@ export type PipelineRunLogsSubscription = {
                     label: string;
                     description: string | null;
                   }
+                | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
                 | {
                     __typename: 'TableColumnLineageMetadataEntry';
                     label: string;
@@ -1611,6 +1619,7 @@ export type PipelineRunLogsSubscription = {
                     label: string;
                     description: string | null;
                   }
+                | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
                 | {
                     __typename: 'TableColumnLineageMetadataEntry';
                     label: string;
@@ -1775,6 +1784,7 @@ export type PipelineRunLogsSubscription = {
                       label: string;
                       description: string | null;
                     }
+                  | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
                   | {
                       __typename: 'TableColumnLineageMetadataEntry';
                       label: string;
@@ -1941,6 +1951,7 @@ export type PipelineRunLogsSubscription = {
                     label: string;
                     description: string | null;
                   }
+                | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
                 | {
                     __typename: 'TableColumnLineageMetadataEntry';
                     label: string;
@@ -2106,6 +2117,7 @@ export type PipelineRunLogsSubscription = {
                     label: string;
                     description: string | null;
                   }
+                | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
                 | {
                     __typename: 'TableColumnLineageMetadataEntry';
                     label: string;
@@ -2280,6 +2292,7 @@ export type PipelineRunLogsSubscription = {
                     label: string;
                     description: string | null;
                   }
+                | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
                 | {
                     __typename: 'TableColumnLineageMetadataEntry';
                     label: string;
@@ -2444,6 +2457,7 @@ export type PipelineRunLogsSubscription = {
                     label: string;
                     description: string | null;
                   }
+                | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
                 | {
                     __typename: 'TableColumnLineageMetadataEntry';
                     label: string;
@@ -2691,6 +2705,7 @@ export type PipelineRunLogsSubscription = {
                       label: string;
                       description: string | null;
                     }
+                  | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
                   | {
                       __typename: 'TableColumnLineageMetadataEntry';
                       label: string;
@@ -2859,6 +2874,7 @@ export type PipelineRunLogsSubscription = {
                     label: string;
                     description: string | null;
                   }
+                | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
                 | {
                     __typename: 'TableColumnLineageMetadataEntry';
                     label: string;
@@ -3023,6 +3039,7 @@ export type PipelineRunLogsSubscription = {
                     label: string;
                     description: string | null;
                   }
+                | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
                 | {
                     __typename: 'TableColumnLineageMetadataEntry';
                     label: string;
@@ -3229,6 +3246,7 @@ export type RunLogsSubscriptionSuccessFragment = {
                 label: string;
                 description: string | null;
               }
+            | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
             | {
                 __typename: 'TableColumnLineageMetadataEntry';
                 label: string;
@@ -3412,6 +3430,7 @@ export type RunLogsSubscriptionSuccessFragment = {
               label: string;
               description: string | null;
             }
+          | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
           | {
               __typename: 'TableColumnLineageMetadataEntry';
               label: string;
@@ -3590,6 +3609,7 @@ export type RunLogsSubscriptionSuccessFragment = {
                 label: string;
                 description: string | null;
               }
+            | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
             | {
                 __typename: 'TableColumnLineageMetadataEntry';
                 label: string;
@@ -3757,6 +3777,7 @@ export type RunLogsSubscriptionSuccessFragment = {
                 label: string;
                 description: string | null;
               }
+            | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
             | {
                 __typename: 'TableColumnLineageMetadataEntry';
                 label: string;
@@ -3921,6 +3942,7 @@ export type RunLogsSubscriptionSuccessFragment = {
               label: string;
               description: string | null;
             }
+          | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
           | {
               __typename: 'TableColumnLineageMetadataEntry';
               label: string;
@@ -4072,6 +4094,7 @@ export type RunLogsSubscriptionSuccessFragment = {
                 label: string;
                 description: string | null;
               }
+            | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
             | {
                 __typename: 'TableColumnLineageMetadataEntry';
                 label: string;
@@ -4292,6 +4315,7 @@ export type RunLogsSubscriptionSuccessFragment = {
               label: string;
               description: string | null;
             }
+          | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
           | {
               __typename: 'TableColumnLineageMetadataEntry';
               label: string;
@@ -4490,6 +4514,7 @@ export type RunLogsSubscriptionSuccessFragment = {
               label: string;
               description: string | null;
             }
+          | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
           | {
               __typename: 'TableColumnLineageMetadataEntry';
               label: string;
@@ -4671,6 +4696,7 @@ export type RunLogsSubscriptionSuccessFragment = {
               label: string;
               description: string | null;
             }
+          | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
           | {
               __typename: 'TableColumnLineageMetadataEntry';
               label: string;
@@ -4830,6 +4856,7 @@ export type RunLogsSubscriptionSuccessFragment = {
                 label: string;
                 description: string | null;
               }
+            | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
             | {
                 __typename: 'TableColumnLineageMetadataEntry';
                 label: string;
@@ -4993,6 +5020,7 @@ export type RunLogsSubscriptionSuccessFragment = {
               label: string;
               description: string | null;
             }
+          | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
           | {
               __typename: 'TableColumnLineageMetadataEntry';
               label: string;
@@ -5153,6 +5181,7 @@ export type RunLogsSubscriptionSuccessFragment = {
               label: string;
               description: string | null;
             }
+          | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
           | {
               __typename: 'TableColumnLineageMetadataEntry';
               label: string;
@@ -5322,6 +5351,7 @@ export type RunLogsSubscriptionSuccessFragment = {
               label: string;
               description: string | null;
             }
+          | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
           | {
               __typename: 'TableColumnLineageMetadataEntry';
               label: string;
@@ -5481,6 +5511,7 @@ export type RunLogsSubscriptionSuccessFragment = {
               label: string;
               description: string | null;
             }
+          | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
           | {
               __typename: 'TableColumnLineageMetadataEntry';
               label: string;
@@ -5723,6 +5754,7 @@ export type RunLogsSubscriptionSuccessFragment = {
                 label: string;
                 description: string | null;
               }
+            | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
             | {
                 __typename: 'TableColumnLineageMetadataEntry';
                 label: string;
@@ -5888,6 +5920,7 @@ export type RunLogsSubscriptionSuccessFragment = {
               label: string;
               description: string | null;
             }
+          | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
           | {
               __typename: 'TableColumnLineageMetadataEntry';
               label: string;
@@ -6047,6 +6080,7 @@ export type RunLogsSubscriptionSuccessFragment = {
               label: string;
               description: string | null;
             }
+          | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
           | {
               __typename: 'TableColumnLineageMetadataEntry';
               label: string;
@@ -6266,6 +6300,7 @@ export type RunLogsQuery = {
                       label: string;
                       description: string | null;
                     }
+                  | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
                   | {
                       __typename: 'TableColumnLineageMetadataEntry';
                       label: string;
@@ -6452,6 +6487,7 @@ export type RunLogsQuery = {
                     label: string;
                     description: string | null;
                   }
+                | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
                 | {
                     __typename: 'TableColumnLineageMetadataEntry';
                     label: string;
@@ -6635,6 +6671,7 @@ export type RunLogsQuery = {
                       label: string;
                       description: string | null;
                     }
+                  | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
                   | {
                       __typename: 'TableColumnLineageMetadataEntry';
                       label: string;
@@ -6805,6 +6842,7 @@ export type RunLogsQuery = {
                       label: string;
                       description: string | null;
                     }
+                  | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
                   | {
                       __typename: 'TableColumnLineageMetadataEntry';
                       label: string;
@@ -6972,6 +7010,7 @@ export type RunLogsQuery = {
                     label: string;
                     description: string | null;
                   }
+                | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
                 | {
                     __typename: 'TableColumnLineageMetadataEntry';
                     label: string;
@@ -7128,6 +7167,7 @@ export type RunLogsQuery = {
                       label: string;
                       description: string | null;
                     }
+                  | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
                   | {
                       __typename: 'TableColumnLineageMetadataEntry';
                       label: string;
@@ -7351,6 +7391,7 @@ export type RunLogsQuery = {
                     label: string;
                     description: string | null;
                   }
+                | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
                 | {
                     __typename: 'TableColumnLineageMetadataEntry';
                     label: string;
@@ -7554,6 +7595,7 @@ export type RunLogsQuery = {
                     label: string;
                     description: string | null;
                   }
+                | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
                 | {
                     __typename: 'TableColumnLineageMetadataEntry';
                     label: string;
@@ -7740,6 +7782,7 @@ export type RunLogsQuery = {
                     label: string;
                     description: string | null;
                   }
+                | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
                 | {
                     __typename: 'TableColumnLineageMetadataEntry';
                     label: string;
@@ -7904,6 +7947,7 @@ export type RunLogsQuery = {
                       label: string;
                       description: string | null;
                     }
+                  | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
                   | {
                       __typename: 'TableColumnLineageMetadataEntry';
                       label: string;
@@ -8070,6 +8114,7 @@ export type RunLogsQuery = {
                     label: string;
                     description: string | null;
                   }
+                | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
                 | {
                     __typename: 'TableColumnLineageMetadataEntry';
                     label: string;
@@ -8235,6 +8280,7 @@ export type RunLogsQuery = {
                     label: string;
                     description: string | null;
                   }
+                | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
                 | {
                     __typename: 'TableColumnLineageMetadataEntry';
                     label: string;
@@ -8409,6 +8455,7 @@ export type RunLogsQuery = {
                     label: string;
                     description: string | null;
                   }
+                | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
                 | {
                     __typename: 'TableColumnLineageMetadataEntry';
                     label: string;
@@ -8573,6 +8620,7 @@ export type RunLogsQuery = {
                     label: string;
                     description: string | null;
                   }
+                | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
                 | {
                     __typename: 'TableColumnLineageMetadataEntry';
                     label: string;
@@ -8820,6 +8868,7 @@ export type RunLogsQuery = {
                       label: string;
                       description: string | null;
                     }
+                  | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
                   | {
                       __typename: 'TableColumnLineageMetadataEntry';
                       label: string;
@@ -8988,6 +9037,7 @@ export type RunLogsQuery = {
                     label: string;
                     description: string | null;
                   }
+                | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
                 | {
                     __typename: 'TableColumnLineageMetadataEntry';
                     label: string;
@@ -9152,6 +9202,7 @@ export type RunLogsQuery = {
                     label: string;
                     description: string | null;
                   }
+                | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
                 | {
                     __typename: 'TableColumnLineageMetadataEntry';
                     label: string;

@@ -67,6 +67,7 @@ export type AssetNodeOpMetadataFragment = {
         label: string;
         description: string | null;
       }
+    | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
     | {
         __typename: 'TableColumnLineageMetadataEntry';
         label: string;
@@ -230,6 +231,7 @@ export type AssetNodeOpMetadataFragment = {
                     label: string;
                     description: string | null;
                   }
+                | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
                 | {
                     __typename: 'TableColumnLineageMetadataEntry';
                     label: string;
@@ -1496,6 +1498,7 @@ export type AssetNodeOpMetadataFragment = {
                     label: string;
                     description: string | null;
                   }
+                | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
                 | {
                     __typename: 'TableColumnLineageMetadataEntry';
                     label: string;
@@ -2762,6 +2765,7 @@ export type AssetNodeOpMetadataFragment = {
                     label: string;
                     description: string | null;
                   }
+                | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
                 | {
                     __typename: 'TableColumnLineageMetadataEntry';
                     label: string;
@@ -4019,6 +4023,7 @@ export type AssetNodeOpMetadataFragment = {
               label: string;
               description: string | null;
             }
+          | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
           | {
               __typename: 'TableColumnLineageMetadataEntry';
               label: string;
@@ -5291,6 +5296,7 @@ export type AssetNodeOpMetadataFragment = {
                     label: string;
                     description: string | null;
                   }
+                | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
                 | {
                     __typename: 'TableColumnLineageMetadataEntry';
                     label: string;
@@ -6557,6 +6563,7 @@ export type AssetNodeOpMetadataFragment = {
                     label: string;
                     description: string | null;
                   }
+                | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
                 | {
                     __typename: 'TableColumnLineageMetadataEntry';
                     label: string;
@@ -7823,6 +7830,7 @@ export type AssetNodeOpMetadataFragment = {
                     label: string;
                     description: string | null;
                   }
+                | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
                 | {
                     __typename: 'TableColumnLineageMetadataEntry';
                     label: string;
@@ -9080,6 +9088,7 @@ export type AssetNodeOpMetadataFragment = {
               label: string;
               description: string | null;
             }
+          | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
           | {
               __typename: 'TableColumnLineageMetadataEntry';
               label: string;
@@ -10352,6 +10361,7 @@ export type AssetNodeOpMetadataFragment = {
                     label: string;
                     description: string | null;
                   }
+                | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
                 | {
                     __typename: 'TableColumnLineageMetadataEntry';
                     label: string;
@@ -11618,6 +11628,7 @@ export type AssetNodeOpMetadataFragment = {
                     label: string;
                     description: string | null;
                   }
+                | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
                 | {
                     __typename: 'TableColumnLineageMetadataEntry';
                     label: string;
@@ -12884,6 +12895,7 @@ export type AssetNodeOpMetadataFragment = {
                     label: string;
                     description: string | null;
                   }
+                | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
                 | {
                     __typename: 'TableColumnLineageMetadataEntry';
                     label: string;
@@ -14141,6 +14153,7 @@ export type AssetNodeOpMetadataFragment = {
               label: string;
               description: string | null;
             }
+          | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
           | {
               __typename: 'TableColumnLineageMetadataEntry';
               label: string;

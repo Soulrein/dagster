@@ -2676,6 +2676,24 @@ type JobMetadataEntry implements MetadataEntry {
   locationName: String!
 }
 
+type SourceMetadataEntry implements MetadataEntry {
+  label: String!
+  description: String
+  sources: [SourceEntry!]!
+}
+
+type SourceEntry {
+  key: String!
+  source: GrapheneSource!
+}
+
+union GrapheneSource = LocalFileSource
+
+type LocalFileSource {
+  filePath: String!
+  lineNumber: Int!
+}
+
 type NullMetadataEntry implements MetadataEntry {
   label: String!
   description: String
