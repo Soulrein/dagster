@@ -21,11 +21,8 @@ export const CodeLink = ({codeLinkData}: {codeLinkData: CodeLinkData}) => {
   const codeSourceDataByKey =
     codeLinkData &&
     Object.entries(codeLinkData).reduce(
-      (
-        acc: {[key: string]: {file: string; lineNumber: any}},
-        [key, [pathToModule, pathFromModule, lineNumber]],
-      ) => {
-        acc[key] = {file: `${pathToModule}/${pathFromModule}`, lineNumber};
+      (acc: {[key: string]: {file: string; lineNumber: any}}, [key, [file, lineNumber]]) => {
+        acc[key] = {file, lineNumber};
         return acc;
       },
       {},
