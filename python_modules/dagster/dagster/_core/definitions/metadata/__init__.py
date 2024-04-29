@@ -1,3 +1,4 @@
+import inspect
 import os
 from abc import ABC, abstractmethod
 from datetime import datetime
@@ -46,10 +47,6 @@ if TYPE_CHECKING:
     from dagster._core.definitions.source_asset import SourceAsset
 
 
-from .source import (  # re-exported
-    SourcePathMetadataSet as SourcePathMetadataSet,
-    source_path_from_fn,
-)
 from .table import (  # re-exported
     TableColumn as TableColumn,
     TableColumnConstraints as TableColumnConstraints,
@@ -1326,12 +1323,59 @@ class TableMetadataSet(NamespacedMetadataSet):
 DEFAULT_SOURCE_FILE_KEY = "asset_definition"
 
 
+## Source Metadata
+
+
+@experimental
+@whitelist_for_serdes
+class LocalFileSource(DagsterModel):
+    """Represents a local file source location."""
+
+    file_path: str
+    line_number: int
+
+
+@experimental
+@whitelist_for_serdes
+class SourceMetadataValue(DagsterModel, MetadataValue["SourceMetadataValue"]):
+    """Metadata value type which represents source locations (locally or otherwise)
+    of the asset in question. For example, the file path and line number where the
+    asset is defined.
+
+    Properties:
+    sources (Dict[str, LocalFileSource]): A labeled dictionary of sources.
+    """
+
+    sources: Dict[str, LocalFileSource] = {}
+
+    @property
+    def value(self) -> "SourceMetadataValue":
+        return self
+
+
+def source_path_from_fn(fn: Callable[..., Any]) -> Optional[LocalFileSource]:
+    cwd = os.getcwd()
+    origin_file: Optional[str] = None
+    origin_line = None
+    try:
+        origin_file = os.path.abspath(os.path.join(cwd, inspect.getsourcefile(fn)))  # type: ignore
+        origin_file = check.not_none(origin_file)
+        origin_line = inspect.getsourcelines(fn)[1]
+    except TypeError:
+        return None
+
+    return LocalFileSource(
+        file_path=origin_file,
+        line_number=origin_line,
+    )
+
+
 class SourceDataMetadataSet(NamespacedMetadataSet):
     """Metadata entries that apply to asset definitions and which specify the source code location
     for the asset.
     """
 
-    source_paths: Dict[str, SourcePathMetadataSet] = {}
+    source_data: SourceMetadataValue
 
     @classmethod
     def namespace(cls) -> str:
@@ -1358,7 +1402,9 @@ def _with_code_source_single_definition(
     source_path = source_path_from_fn(base_fn)
 
     if source_path:
-        source_metadata = SourceDataMetadataSet(source_paths={DEFAULT_SOURCE_FILE_KEY: source_path})
+        source_metadata = SourceDataMetadataSet(
+            source_data=SourceMetadataValue(sources={DEFAULT_SOURCE_FILE_KEY: source_path})
+        )
         for key in assets_def.keys:
             metadata_by_key[key] = {**metadata_by_key.get(key, {}), **source_metadata}
 

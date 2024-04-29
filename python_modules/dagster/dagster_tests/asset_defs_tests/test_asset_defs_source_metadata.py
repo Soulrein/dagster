@@ -4,7 +4,7 @@ from typing import cast
 from dagster import AssetsDefinition, load_assets_from_modules
 from dagster._core.definitions.metadata import (
     DEFAULT_SOURCE_FILE_KEY,
-    SourcePathMetadataSet,
+    LocalFileSource,
     with_code_source,
 )
 from dagster._utils import file_relative_path
@@ -53,15 +53,19 @@ def test_asset_code_origins() -> None:
             expected_file_path, expected_line_number = expected_origins[op_name].split(":")
 
             for key in asset.keys:
-                assert "dagster/source_paths" in asset.metadata_by_key[key]
-                assert len(asset.metadata_by_key[key]["dagster/source_paths"]) == 1
+                assert "dagster/source_data" in asset.metadata_by_key[key]
+                assert len(asset.metadata_by_key[key]["dagster/source_data"].sources) == 1
                 assert isinstance(
-                    asset.metadata_by_key[key]["dagster/source_paths"][DEFAULT_SOURCE_FILE_KEY],
-                    SourcePathMetadataSet,
+                    asset.metadata_by_key[key]["dagster/source_data"].sources[
+                        DEFAULT_SOURCE_FILE_KEY
+                    ],
+                    LocalFileSource,
                 )
                 meta = cast(
-                    SourcePathMetadataSet,
-                    asset.metadata_by_key[key]["dagster/source_paths"][DEFAULT_SOURCE_FILE_KEY],
+                    LocalFileSource,
+                    asset.metadata_by_key[key]["dagster/source_data"].sources[
+                        DEFAULT_SOURCE_FILE_KEY
+                    ],
                 )
 
                 assert meta.file_path == expected_file_path
