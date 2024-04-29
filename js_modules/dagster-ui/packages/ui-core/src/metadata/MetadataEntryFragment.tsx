@@ -18,18 +18,6 @@ export const METADATA_ENTRY_FRAGMENT = gql`
     ... on UrlMetadataEntry {
       url
     }
-    ... on SourceMetadataEntry {
-      sources {
-        key
-        source {
-          __typename
-          ... on LocalFileSource {
-            filePath
-            lineNumber
-          }
-        }
-      }
-    }
     ... on TextMetadataEntry {
       text
     }
