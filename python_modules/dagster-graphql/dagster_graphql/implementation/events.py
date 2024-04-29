@@ -161,6 +161,7 @@ def iterate_metadata_entries(metadata: Mapping[str, MetadataValue]) -> Iterator[
             )
         elif isinstance(value, SourceMetadataValue):
             yield GrapheneSourceMetadataEntry(
+                label=key,
                 sources=[
                     GrapheneSourceEntry(
                         key=source_key,
@@ -170,7 +171,7 @@ def iterate_metadata_entries(metadata: Mapping[str, MetadataValue]) -> Iterator[
                         ),
                     )
                     for source_key, source in value.sources.items()
-                ]
+                ],
             )
         elif isinstance(value, TableMetadataValue):
             yield GrapheneTableMetadataEntry(
