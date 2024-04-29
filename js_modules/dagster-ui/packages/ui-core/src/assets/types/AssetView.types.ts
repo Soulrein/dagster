@@ -725,7 +725,16 @@ export type AssetViewDefinitionQuery = {
                 label: string;
                 description: string | null;
               }
-            | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
+            | {
+                __typename: 'SourceMetadataEntry';
+                label: string;
+                description: string | null;
+                sources: Array<{
+                  __typename: 'SourceEntry';
+                  key: string;
+                  source: {__typename: 'LocalFileSource'; filePath: string; lineNumber: number};
+                }>;
+              }
             | {
                 __typename: 'TableColumnLineageMetadataEntry';
                 label: string;
@@ -907,6 +916,15 @@ export type AssetViewDefinitionQuery = {
                             __typename: 'SourceMetadataEntry';
                             label: string;
                             description: string | null;
+                            sources: Array<{
+                              __typename: 'SourceEntry';
+                              key: string;
+                              source: {
+                                __typename: 'LocalFileSource';
+                                filePath: string;
+                                lineNumber: number;
+                              };
+                            }>;
                           }
                         | {
                             __typename: 'TableColumnLineageMetadataEntry';
@@ -2188,6 +2206,15 @@ export type AssetViewDefinitionQuery = {
                             __typename: 'SourceMetadataEntry';
                             label: string;
                             description: string | null;
+                            sources: Array<{
+                              __typename: 'SourceEntry';
+                              key: string;
+                              source: {
+                                __typename: 'LocalFileSource';
+                                filePath: string;
+                                lineNumber: number;
+                              };
+                            }>;
                           }
                         | {
                             __typename: 'TableColumnLineageMetadataEntry';
@@ -3469,6 +3496,15 @@ export type AssetViewDefinitionQuery = {
                             __typename: 'SourceMetadataEntry';
                             label: string;
                             description: string | null;
+                            sources: Array<{
+                              __typename: 'SourceEntry';
+                              key: string;
+                              source: {
+                                __typename: 'LocalFileSource';
+                                filePath: string;
+                                lineNumber: number;
+                              };
+                            }>;
                           }
                         | {
                             __typename: 'TableColumnLineageMetadataEntry';
@@ -4733,7 +4769,20 @@ export type AssetViewDefinitionQuery = {
                       label: string;
                       description: string | null;
                     }
-                  | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
+                  | {
+                      __typename: 'SourceMetadataEntry';
+                      label: string;
+                      description: string | null;
+                      sources: Array<{
+                        __typename: 'SourceEntry';
+                        key: string;
+                        source: {
+                          __typename: 'LocalFileSource';
+                          filePath: string;
+                          lineNumber: number;
+                        };
+                      }>;
+                    }
                   | {
                       __typename: 'TableColumnLineageMetadataEntry';
                       label: string;
@@ -6022,6 +6071,15 @@ export type AssetViewDefinitionQuery = {
                             __typename: 'SourceMetadataEntry';
                             label: string;
                             description: string | null;
+                            sources: Array<{
+                              __typename: 'SourceEntry';
+                              key: string;
+                              source: {
+                                __typename: 'LocalFileSource';
+                                filePath: string;
+                                lineNumber: number;
+                              };
+                            }>;
                           }
                         | {
                             __typename: 'TableColumnLineageMetadataEntry';
@@ -7303,6 +7361,15 @@ export type AssetViewDefinitionQuery = {
                             __typename: 'SourceMetadataEntry';
                             label: string;
                             description: string | null;
+                            sources: Array<{
+                              __typename: 'SourceEntry';
+                              key: string;
+                              source: {
+                                __typename: 'LocalFileSource';
+                                filePath: string;
+                                lineNumber: number;
+                              };
+                            }>;
                           }
                         | {
                             __typename: 'TableColumnLineageMetadataEntry';
@@ -8584,6 +8651,15 @@ export type AssetViewDefinitionQuery = {
                             __typename: 'SourceMetadataEntry';
                             label: string;
                             description: string | null;
+                            sources: Array<{
+                              __typename: 'SourceEntry';
+                              key: string;
+                              source: {
+                                __typename: 'LocalFileSource';
+                                filePath: string;
+                                lineNumber: number;
+                              };
+                            }>;
                           }
                         | {
                             __typename: 'TableColumnLineageMetadataEntry';
@@ -9848,7 +9924,20 @@ export type AssetViewDefinitionQuery = {
                       label: string;
                       description: string | null;
                     }
-                  | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
+                  | {
+                      __typename: 'SourceMetadataEntry';
+                      label: string;
+                      description: string | null;
+                      sources: Array<{
+                        __typename: 'SourceEntry';
+                        key: string;
+                        source: {
+                          __typename: 'LocalFileSource';
+                          filePath: string;
+                          lineNumber: number;
+                        };
+                      }>;
+                    }
                   | {
                       __typename: 'TableColumnLineageMetadataEntry';
                       label: string;
@@ -11137,6 +11226,15 @@ export type AssetViewDefinitionQuery = {
                             __typename: 'SourceMetadataEntry';
                             label: string;
                             description: string | null;
+                            sources: Array<{
+                              __typename: 'SourceEntry';
+                              key: string;
+                              source: {
+                                __typename: 'LocalFileSource';
+                                filePath: string;
+                                lineNumber: number;
+                              };
+                            }>;
                           }
                         | {
                             __typename: 'TableColumnLineageMetadataEntry';
@@ -12418,6 +12516,15 @@ export type AssetViewDefinitionQuery = {
                             __typename: 'SourceMetadataEntry';
                             label: string;
                             description: string | null;
+                            sources: Array<{
+                              __typename: 'SourceEntry';
+                              key: string;
+                              source: {
+                                __typename: 'LocalFileSource';
+                                filePath: string;
+                                lineNumber: number;
+                              };
+                            }>;
                           }
                         | {
                             __typename: 'TableColumnLineageMetadataEntry';
@@ -13699,6 +13806,15 @@ export type AssetViewDefinitionQuery = {
                             __typename: 'SourceMetadataEntry';
                             label: string;
                             description: string | null;
+                            sources: Array<{
+                              __typename: 'SourceEntry';
+                              key: string;
+                              source: {
+                                __typename: 'LocalFileSource';
+                                filePath: string;
+                                lineNumber: number;
+                              };
+                            }>;
                           }
                         | {
                             __typename: 'TableColumnLineageMetadataEntry';
@@ -14963,7 +15079,20 @@ export type AssetViewDefinitionQuery = {
                       label: string;
                       description: string | null;
                     }
-                  | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
+                  | {
+                      __typename: 'SourceMetadataEntry';
+                      label: string;
+                      description: string | null;
+                      sources: Array<{
+                        __typename: 'SourceEntry';
+                        key: string;
+                        source: {
+                          __typename: 'LocalFileSource';
+                          filePath: string;
+                          lineNumber: number;
+                        };
+                      }>;
+                    }
                   | {
                       __typename: 'TableColumnLineageMetadataEntry';
                       label: string;
@@ -16849,7 +16978,16 @@ export type AssetViewDefinitionNodeFragment = {
         label: string;
         description: string | null;
       }
-    | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
+    | {
+        __typename: 'SourceMetadataEntry';
+        label: string;
+        description: string | null;
+        sources: Array<{
+          __typename: 'SourceEntry';
+          key: string;
+          source: {__typename: 'LocalFileSource'; filePath: string; lineNumber: number};
+        }>;
+      }
     | {
         __typename: 'TableColumnLineageMetadataEntry';
         label: string;
@@ -17013,7 +17151,16 @@ export type AssetViewDefinitionNodeFragment = {
                     label: string;
                     description: string | null;
                   }
-                | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
+                | {
+                    __typename: 'SourceMetadataEntry';
+                    label: string;
+                    description: string | null;
+                    sources: Array<{
+                      __typename: 'SourceEntry';
+                      key: string;
+                      source: {__typename: 'LocalFileSource'; filePath: string; lineNumber: number};
+                    }>;
+                  }
                 | {
                     __typename: 'TableColumnLineageMetadataEntry';
                     label: string;
@@ -18280,7 +18427,16 @@ export type AssetViewDefinitionNodeFragment = {
                     label: string;
                     description: string | null;
                   }
-                | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
+                | {
+                    __typename: 'SourceMetadataEntry';
+                    label: string;
+                    description: string | null;
+                    sources: Array<{
+                      __typename: 'SourceEntry';
+                      key: string;
+                      source: {__typename: 'LocalFileSource'; filePath: string; lineNumber: number};
+                    }>;
+                  }
                 | {
                     __typename: 'TableColumnLineageMetadataEntry';
                     label: string;
@@ -19547,7 +19703,16 @@ export type AssetViewDefinitionNodeFragment = {
                     label: string;
                     description: string | null;
                   }
-                | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
+                | {
+                    __typename: 'SourceMetadataEntry';
+                    label: string;
+                    description: string | null;
+                    sources: Array<{
+                      __typename: 'SourceEntry';
+                      key: string;
+                      source: {__typename: 'LocalFileSource'; filePath: string; lineNumber: number};
+                    }>;
+                  }
                 | {
                     __typename: 'TableColumnLineageMetadataEntry';
                     label: string;
@@ -20805,7 +20970,16 @@ export type AssetViewDefinitionNodeFragment = {
               label: string;
               description: string | null;
             }
-          | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
+          | {
+              __typename: 'SourceMetadataEntry';
+              label: string;
+              description: string | null;
+              sources: Array<{
+                __typename: 'SourceEntry';
+                key: string;
+                source: {__typename: 'LocalFileSource'; filePath: string; lineNumber: number};
+              }>;
+            }
           | {
               __typename: 'TableColumnLineageMetadataEntry';
               label: string;
@@ -22078,7 +22252,16 @@ export type AssetViewDefinitionNodeFragment = {
                     label: string;
                     description: string | null;
                   }
-                | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
+                | {
+                    __typename: 'SourceMetadataEntry';
+                    label: string;
+                    description: string | null;
+                    sources: Array<{
+                      __typename: 'SourceEntry';
+                      key: string;
+                      source: {__typename: 'LocalFileSource'; filePath: string; lineNumber: number};
+                    }>;
+                  }
                 | {
                     __typename: 'TableColumnLineageMetadataEntry';
                     label: string;
@@ -23345,7 +23528,16 @@ export type AssetViewDefinitionNodeFragment = {
                     label: string;
                     description: string | null;
                   }
-                | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
+                | {
+                    __typename: 'SourceMetadataEntry';
+                    label: string;
+                    description: string | null;
+                    sources: Array<{
+                      __typename: 'SourceEntry';
+                      key: string;
+                      source: {__typename: 'LocalFileSource'; filePath: string; lineNumber: number};
+                    }>;
+                  }
                 | {
                     __typename: 'TableColumnLineageMetadataEntry';
                     label: string;
@@ -24612,7 +24804,16 @@ export type AssetViewDefinitionNodeFragment = {
                     label: string;
                     description: string | null;
                   }
-                | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
+                | {
+                    __typename: 'SourceMetadataEntry';
+                    label: string;
+                    description: string | null;
+                    sources: Array<{
+                      __typename: 'SourceEntry';
+                      key: string;
+                      source: {__typename: 'LocalFileSource'; filePath: string; lineNumber: number};
+                    }>;
+                  }
                 | {
                     __typename: 'TableColumnLineageMetadataEntry';
                     label: string;
@@ -25870,7 +26071,16 @@ export type AssetViewDefinitionNodeFragment = {
               label: string;
               description: string | null;
             }
-          | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
+          | {
+              __typename: 'SourceMetadataEntry';
+              label: string;
+              description: string | null;
+              sources: Array<{
+                __typename: 'SourceEntry';
+                key: string;
+                source: {__typename: 'LocalFileSource'; filePath: string; lineNumber: number};
+              }>;
+            }
           | {
               __typename: 'TableColumnLineageMetadataEntry';
               label: string;
@@ -27143,7 +27353,16 @@ export type AssetViewDefinitionNodeFragment = {
                     label: string;
                     description: string | null;
                   }
-                | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
+                | {
+                    __typename: 'SourceMetadataEntry';
+                    label: string;
+                    description: string | null;
+                    sources: Array<{
+                      __typename: 'SourceEntry';
+                      key: string;
+                      source: {__typename: 'LocalFileSource'; filePath: string; lineNumber: number};
+                    }>;
+                  }
                 | {
                     __typename: 'TableColumnLineageMetadataEntry';
                     label: string;
@@ -28410,7 +28629,16 @@ export type AssetViewDefinitionNodeFragment = {
                     label: string;
                     description: string | null;
                   }
-                | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
+                | {
+                    __typename: 'SourceMetadataEntry';
+                    label: string;
+                    description: string | null;
+                    sources: Array<{
+                      __typename: 'SourceEntry';
+                      key: string;
+                      source: {__typename: 'LocalFileSource'; filePath: string; lineNumber: number};
+                    }>;
+                  }
                 | {
                     __typename: 'TableColumnLineageMetadataEntry';
                     label: string;
@@ -29677,7 +29905,16 @@ export type AssetViewDefinitionNodeFragment = {
                     label: string;
                     description: string | null;
                   }
-                | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
+                | {
+                    __typename: 'SourceMetadataEntry';
+                    label: string;
+                    description: string | null;
+                    sources: Array<{
+                      __typename: 'SourceEntry';
+                      key: string;
+                      source: {__typename: 'LocalFileSource'; filePath: string; lineNumber: number};
+                    }>;
+                  }
                 | {
                     __typename: 'TableColumnLineageMetadataEntry';
                     label: string;
@@ -30935,7 +31172,16 @@ export type AssetViewDefinitionNodeFragment = {
               label: string;
               description: string | null;
             }
-          | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
+          | {
+              __typename: 'SourceMetadataEntry';
+              label: string;
+              description: string | null;
+              sources: Array<{
+                __typename: 'SourceEntry';
+                key: string;
+                source: {__typename: 'LocalFileSource'; filePath: string; lineNumber: number};
+              }>;
+            }
           | {
               __typename: 'TableColumnLineageMetadataEntry';
               label: string;

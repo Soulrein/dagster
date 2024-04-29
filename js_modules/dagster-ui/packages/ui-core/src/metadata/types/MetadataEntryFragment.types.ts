@@ -93,6 +93,11 @@ export type MetadataEntryFragment_SourceMetadataEntry = {
   __typename: 'SourceMetadataEntry';
   label: string;
   description: string | null;
+  sources: Array<{
+    __typename: 'SourceEntry';
+    key: string;
+    source: {__typename: 'LocalFileSource'; filePath: string; lineNumber: number};
+  }>;
 };
 
 export type MetadataEntryFragment_TableColumnLineageMetadataEntry = {

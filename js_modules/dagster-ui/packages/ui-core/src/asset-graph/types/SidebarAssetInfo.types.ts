@@ -71,7 +71,16 @@ export type SidebarAssetFragment = {
         label: string;
         description: string | null;
       }
-    | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
+    | {
+        __typename: 'SourceMetadataEntry';
+        label: string;
+        description: string | null;
+        sources: Array<{
+          __typename: 'SourceEntry';
+          key: string;
+          source: {__typename: 'LocalFileSource'; filePath: string; lineNumber: number};
+        }>;
+      }
     | {
         __typename: 'TableColumnLineageMetadataEntry';
         label: string;
@@ -830,7 +839,16 @@ export type SidebarAssetFragment = {
                     label: string;
                     description: string | null;
                   }
-                | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
+                | {
+                    __typename: 'SourceMetadataEntry';
+                    label: string;
+                    description: string | null;
+                    sources: Array<{
+                      __typename: 'SourceEntry';
+                      key: string;
+                      source: {__typename: 'LocalFileSource'; filePath: string; lineNumber: number};
+                    }>;
+                  }
                 | {
                     __typename: 'TableColumnLineageMetadataEntry';
                     label: string;
@@ -2097,7 +2115,16 @@ export type SidebarAssetFragment = {
                     label: string;
                     description: string | null;
                   }
-                | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
+                | {
+                    __typename: 'SourceMetadataEntry';
+                    label: string;
+                    description: string | null;
+                    sources: Array<{
+                      __typename: 'SourceEntry';
+                      key: string;
+                      source: {__typename: 'LocalFileSource'; filePath: string; lineNumber: number};
+                    }>;
+                  }
                 | {
                     __typename: 'TableColumnLineageMetadataEntry';
                     label: string;
@@ -3364,7 +3391,16 @@ export type SidebarAssetFragment = {
                     label: string;
                     description: string | null;
                   }
-                | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
+                | {
+                    __typename: 'SourceMetadataEntry';
+                    label: string;
+                    description: string | null;
+                    sources: Array<{
+                      __typename: 'SourceEntry';
+                      key: string;
+                      source: {__typename: 'LocalFileSource'; filePath: string; lineNumber: number};
+                    }>;
+                  }
                 | {
                     __typename: 'TableColumnLineageMetadataEntry';
                     label: string;
@@ -4622,7 +4658,16 @@ export type SidebarAssetFragment = {
               label: string;
               description: string | null;
             }
-          | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
+          | {
+              __typename: 'SourceMetadataEntry';
+              label: string;
+              description: string | null;
+              sources: Array<{
+                __typename: 'SourceEntry';
+                key: string;
+                source: {__typename: 'LocalFileSource'; filePath: string; lineNumber: number};
+              }>;
+            }
           | {
               __typename: 'TableColumnLineageMetadataEntry';
               label: string;
@@ -5895,7 +5940,16 @@ export type SidebarAssetFragment = {
                     label: string;
                     description: string | null;
                   }
-                | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
+                | {
+                    __typename: 'SourceMetadataEntry';
+                    label: string;
+                    description: string | null;
+                    sources: Array<{
+                      __typename: 'SourceEntry';
+                      key: string;
+                      source: {__typename: 'LocalFileSource'; filePath: string; lineNumber: number};
+                    }>;
+                  }
                 | {
                     __typename: 'TableColumnLineageMetadataEntry';
                     label: string;
@@ -7162,7 +7216,16 @@ export type SidebarAssetFragment = {
                     label: string;
                     description: string | null;
                   }
-                | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
+                | {
+                    __typename: 'SourceMetadataEntry';
+                    label: string;
+                    description: string | null;
+                    sources: Array<{
+                      __typename: 'SourceEntry';
+                      key: string;
+                      source: {__typename: 'LocalFileSource'; filePath: string; lineNumber: number};
+                    }>;
+                  }
                 | {
                     __typename: 'TableColumnLineageMetadataEntry';
                     label: string;
@@ -8429,7 +8492,16 @@ export type SidebarAssetFragment = {
                     label: string;
                     description: string | null;
                   }
-                | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
+                | {
+                    __typename: 'SourceMetadataEntry';
+                    label: string;
+                    description: string | null;
+                    sources: Array<{
+                      __typename: 'SourceEntry';
+                      key: string;
+                      source: {__typename: 'LocalFileSource'; filePath: string; lineNumber: number};
+                    }>;
+                  }
                 | {
                     __typename: 'TableColumnLineageMetadataEntry';
                     label: string;
@@ -9687,7 +9759,16 @@ export type SidebarAssetFragment = {
               label: string;
               description: string | null;
             }
-          | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
+          | {
+              __typename: 'SourceMetadataEntry';
+              label: string;
+              description: string | null;
+              sources: Array<{
+                __typename: 'SourceEntry';
+                key: string;
+                source: {__typename: 'LocalFileSource'; filePath: string; lineNumber: number};
+              }>;
+            }
           | {
               __typename: 'TableColumnLineageMetadataEntry';
               label: string;
@@ -10960,7 +11041,16 @@ export type SidebarAssetFragment = {
                     label: string;
                     description: string | null;
                   }
-                | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
+                | {
+                    __typename: 'SourceMetadataEntry';
+                    label: string;
+                    description: string | null;
+                    sources: Array<{
+                      __typename: 'SourceEntry';
+                      key: string;
+                      source: {__typename: 'LocalFileSource'; filePath: string; lineNumber: number};
+                    }>;
+                  }
                 | {
                     __typename: 'TableColumnLineageMetadataEntry';
                     label: string;
@@ -12227,7 +12317,16 @@ export type SidebarAssetFragment = {
                     label: string;
                     description: string | null;
                   }
-                | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
+                | {
+                    __typename: 'SourceMetadataEntry';
+                    label: string;
+                    description: string | null;
+                    sources: Array<{
+                      __typename: 'SourceEntry';
+                      key: string;
+                      source: {__typename: 'LocalFileSource'; filePath: string; lineNumber: number};
+                    }>;
+                  }
                 | {
                     __typename: 'TableColumnLineageMetadataEntry';
                     label: string;
@@ -13494,7 +13593,16 @@ export type SidebarAssetFragment = {
                     label: string;
                     description: string | null;
                   }
-                | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
+                | {
+                    __typename: 'SourceMetadataEntry';
+                    label: string;
+                    description: string | null;
+                    sources: Array<{
+                      __typename: 'SourceEntry';
+                      key: string;
+                      source: {__typename: 'LocalFileSource'; filePath: string; lineNumber: number};
+                    }>;
+                  }
                 | {
                     __typename: 'TableColumnLineageMetadataEntry';
                     label: string;
@@ -14752,7 +14860,16 @@ export type SidebarAssetFragment = {
               label: string;
               description: string | null;
             }
-          | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
+          | {
+              __typename: 'SourceMetadataEntry';
+              label: string;
+              description: string | null;
+              sources: Array<{
+                __typename: 'SourceEntry';
+                key: string;
+                source: {__typename: 'LocalFileSource'; filePath: string; lineNumber: number};
+              }>;
+            }
           | {
               __typename: 'TableColumnLineageMetadataEntry';
               label: string;
@@ -16021,7 +16138,16 @@ export type SidebarAssetQuery = {
               label: string;
               description: string | null;
             }
-          | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
+          | {
+              __typename: 'SourceMetadataEntry';
+              label: string;
+              description: string | null;
+              sources: Array<{
+                __typename: 'SourceEntry';
+                key: string;
+                source: {__typename: 'LocalFileSource'; filePath: string; lineNumber: number};
+              }>;
+            }
           | {
               __typename: 'TableColumnLineageMetadataEntry';
               label: string;
@@ -16793,6 +16919,15 @@ export type SidebarAssetQuery = {
                           __typename: 'SourceMetadataEntry';
                           label: string;
                           description: string | null;
+                          sources: Array<{
+                            __typename: 'SourceEntry';
+                            key: string;
+                            source: {
+                              __typename: 'LocalFileSource';
+                              filePath: string;
+                              lineNumber: number;
+                            };
+                          }>;
                         }
                       | {
                           __typename: 'TableColumnLineageMetadataEntry';
@@ -18070,6 +18205,15 @@ export type SidebarAssetQuery = {
                           __typename: 'SourceMetadataEntry';
                           label: string;
                           description: string | null;
+                          sources: Array<{
+                            __typename: 'SourceEntry';
+                            key: string;
+                            source: {
+                              __typename: 'LocalFileSource';
+                              filePath: string;
+                              lineNumber: number;
+                            };
+                          }>;
                         }
                       | {
                           __typename: 'TableColumnLineageMetadataEntry';
@@ -19347,6 +19491,15 @@ export type SidebarAssetQuery = {
                           __typename: 'SourceMetadataEntry';
                           label: string;
                           description: string | null;
+                          sources: Array<{
+                            __typename: 'SourceEntry';
+                            key: string;
+                            source: {
+                              __typename: 'LocalFileSource';
+                              filePath: string;
+                              lineNumber: number;
+                            };
+                          }>;
                         }
                       | {
                           __typename: 'TableColumnLineageMetadataEntry';
@@ -20611,7 +20764,16 @@ export type SidebarAssetQuery = {
                     label: string;
                     description: string | null;
                   }
-                | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
+                | {
+                    __typename: 'SourceMetadataEntry';
+                    label: string;
+                    description: string | null;
+                    sources: Array<{
+                      __typename: 'SourceEntry';
+                      key: string;
+                      source: {__typename: 'LocalFileSource'; filePath: string; lineNumber: number};
+                    }>;
+                  }
                 | {
                     __typename: 'TableColumnLineageMetadataEntry';
                     label: string;
@@ -21893,6 +22055,15 @@ export type SidebarAssetQuery = {
                           __typename: 'SourceMetadataEntry';
                           label: string;
                           description: string | null;
+                          sources: Array<{
+                            __typename: 'SourceEntry';
+                            key: string;
+                            source: {
+                              __typename: 'LocalFileSource';
+                              filePath: string;
+                              lineNumber: number;
+                            };
+                          }>;
                         }
                       | {
                           __typename: 'TableColumnLineageMetadataEntry';
@@ -23170,6 +23341,15 @@ export type SidebarAssetQuery = {
                           __typename: 'SourceMetadataEntry';
                           label: string;
                           description: string | null;
+                          sources: Array<{
+                            __typename: 'SourceEntry';
+                            key: string;
+                            source: {
+                              __typename: 'LocalFileSource';
+                              filePath: string;
+                              lineNumber: number;
+                            };
+                          }>;
                         }
                       | {
                           __typename: 'TableColumnLineageMetadataEntry';
@@ -24447,6 +24627,15 @@ export type SidebarAssetQuery = {
                           __typename: 'SourceMetadataEntry';
                           label: string;
                           description: string | null;
+                          sources: Array<{
+                            __typename: 'SourceEntry';
+                            key: string;
+                            source: {
+                              __typename: 'LocalFileSource';
+                              filePath: string;
+                              lineNumber: number;
+                            };
+                          }>;
                         }
                       | {
                           __typename: 'TableColumnLineageMetadataEntry';
@@ -25711,7 +25900,16 @@ export type SidebarAssetQuery = {
                     label: string;
                     description: string | null;
                   }
-                | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
+                | {
+                    __typename: 'SourceMetadataEntry';
+                    label: string;
+                    description: string | null;
+                    sources: Array<{
+                      __typename: 'SourceEntry';
+                      key: string;
+                      source: {__typename: 'LocalFileSource'; filePath: string; lineNumber: number};
+                    }>;
+                  }
                 | {
                     __typename: 'TableColumnLineageMetadataEntry';
                     label: string;
@@ -26993,6 +27191,15 @@ export type SidebarAssetQuery = {
                           __typename: 'SourceMetadataEntry';
                           label: string;
                           description: string | null;
+                          sources: Array<{
+                            __typename: 'SourceEntry';
+                            key: string;
+                            source: {
+                              __typename: 'LocalFileSource';
+                              filePath: string;
+                              lineNumber: number;
+                            };
+                          }>;
                         }
                       | {
                           __typename: 'TableColumnLineageMetadataEntry';
@@ -28270,6 +28477,15 @@ export type SidebarAssetQuery = {
                           __typename: 'SourceMetadataEntry';
                           label: string;
                           description: string | null;
+                          sources: Array<{
+                            __typename: 'SourceEntry';
+                            key: string;
+                            source: {
+                              __typename: 'LocalFileSource';
+                              filePath: string;
+                              lineNumber: number;
+                            };
+                          }>;
                         }
                       | {
                           __typename: 'TableColumnLineageMetadataEntry';
@@ -29547,6 +29763,15 @@ export type SidebarAssetQuery = {
                           __typename: 'SourceMetadataEntry';
                           label: string;
                           description: string | null;
+                          sources: Array<{
+                            __typename: 'SourceEntry';
+                            key: string;
+                            source: {
+                              __typename: 'LocalFileSource';
+                              filePath: string;
+                              lineNumber: number;
+                            };
+                          }>;
                         }
                       | {
                           __typename: 'TableColumnLineageMetadataEntry';
@@ -30811,7 +31036,16 @@ export type SidebarAssetQuery = {
                     label: string;
                     description: string | null;
                   }
-                | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
+                | {
+                    __typename: 'SourceMetadataEntry';
+                    label: string;
+                    description: string | null;
+                    sources: Array<{
+                      __typename: 'SourceEntry';
+                      key: string;
+                      source: {__typename: 'LocalFileSource'; filePath: string; lineNumber: number};
+                    }>;
+                  }
                 | {
                     __typename: 'TableColumnLineageMetadataEntry';
                     label: string;

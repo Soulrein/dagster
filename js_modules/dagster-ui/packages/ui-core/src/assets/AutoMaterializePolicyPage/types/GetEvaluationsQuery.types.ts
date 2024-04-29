@@ -80,7 +80,16 @@ export type SpecificPartitionAssetConditionEvaluationNodeFragment = {
         label: string;
         description: string | null;
       }
-    | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
+    | {
+        __typename: 'SourceMetadataEntry';
+        label: string;
+        description: string | null;
+        sources: Array<{
+          __typename: 'SourceEntry';
+          key: string;
+          source: {__typename: 'LocalFileSource'; filePath: string; lineNumber: number};
+        }>;
+      }
     | {
         __typename: 'TableColumnLineageMetadataEntry';
         label: string;
@@ -222,7 +231,16 @@ export type UnpartitionedAssetConditionEvaluationNodeFragment = {
         label: string;
         description: string | null;
       }
-    | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
+    | {
+        __typename: 'SourceMetadataEntry';
+        label: string;
+        description: string | null;
+        sources: Array<{
+          __typename: 'SourceEntry';
+          key: string;
+          source: {__typename: 'LocalFileSource'; filePath: string; lineNumber: number};
+        }>;
+      }
     | {
         __typename: 'TableColumnLineageMetadataEntry';
         label: string;
@@ -461,7 +479,16 @@ export type AssetConditionEvaluationRecordFragment = {
                 label: string;
                 description: string | null;
               }
-            | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
+            | {
+                __typename: 'SourceMetadataEntry';
+                label: string;
+                description: string | null;
+                sources: Array<{
+                  __typename: 'SourceEntry';
+                  key: string;
+                  source: {__typename: 'LocalFileSource'; filePath: string; lineNumber: number};
+                }>;
+              }
             | {
                 __typename: 'TableColumnLineageMetadataEntry';
                 label: string;
@@ -622,7 +649,16 @@ export type AssetConditionEvaluationRecordFragment = {
                 label: string;
                 description: string | null;
               }
-            | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
+            | {
+                __typename: 'SourceMetadataEntry';
+                label: string;
+                description: string | null;
+                sources: Array<{
+                  __typename: 'SourceEntry';
+                  key: string;
+                  source: {__typename: 'LocalFileSource'; filePath: string; lineNumber: number};
+                }>;
+              }
             | {
                 __typename: 'TableColumnLineageMetadataEntry';
                 label: string;
@@ -863,7 +899,20 @@ export type GetEvaluationsQuery = {
                         label: string;
                         description: string | null;
                       }
-                    | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
+                    | {
+                        __typename: 'SourceMetadataEntry';
+                        label: string;
+                        description: string | null;
+                        sources: Array<{
+                          __typename: 'SourceEntry';
+                          key: string;
+                          source: {
+                            __typename: 'LocalFileSource';
+                            filePath: string;
+                            lineNumber: number;
+                          };
+                        }>;
+                      }
                     | {
                         __typename: 'TableColumnLineageMetadataEntry';
                         label: string;
@@ -1030,7 +1079,20 @@ export type GetEvaluationsQuery = {
                         label: string;
                         description: string | null;
                       }
-                    | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
+                    | {
+                        __typename: 'SourceMetadataEntry';
+                        label: string;
+                        description: string | null;
+                        sources: Array<{
+                          __typename: 'SourceEntry';
+                          key: string;
+                          source: {
+                            __typename: 'LocalFileSource';
+                            filePath: string;
+                            lineNumber: number;
+                          };
+                        }>;
+                      }
                     | {
                         __typename: 'TableColumnLineageMetadataEntry';
                         label: string;
@@ -1252,7 +1314,16 @@ export type GetEvaluationsSpecificPartitionQuery = {
                 label: string;
                 description: string | null;
               }
-            | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
+            | {
+                __typename: 'SourceMetadataEntry';
+                label: string;
+                description: string | null;
+                sources: Array<{
+                  __typename: 'SourceEntry';
+                  key: string;
+                  source: {__typename: 'LocalFileSource'; filePath: string; lineNumber: number};
+                }>;
+              }
             | {
                 __typename: 'TableColumnLineageMetadataEntry';
                 label: string;
@@ -1413,7 +1484,16 @@ export type GetEvaluationsSpecificPartitionQuery = {
                 label: string;
                 description: string | null;
               }
-            | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
+            | {
+                __typename: 'SourceMetadataEntry';
+                label: string;
+                description: string | null;
+                sources: Array<{
+                  __typename: 'SourceEntry';
+                  key: string;
+                  source: {__typename: 'LocalFileSource'; filePath: string; lineNumber: number};
+                }>;
+              }
             | {
                 __typename: 'TableColumnLineageMetadataEntry';
                 label: string;

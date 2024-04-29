@@ -258,6 +258,23 @@ function buildMockMetadataEntry(type: MetadataEntryFragment['__typename']): Meta
         label: 'my_timestamp',
         timestamp: 1710187280.5,
       };
+    case 'SourceMetadataEntry':
+      return {
+        __typename: 'SourceMetadataEntry',
+        description: 'This is the description',
+        label: 'my_source',
+        sources: [
+          {
+            __typename: 'SourceEntry',
+            key: 'asset_definition',
+            source: {
+              __typename: 'LocalFileSource',
+              filePath: '/path/to/file.py',
+              lineNumber: 12,
+            },
+          },
+        ],
+      };
     default:
       return assertUnreachable(type);
   }

@@ -4595,7 +4595,16 @@ export type GraphExplorerFragment_PipelineSnapshot = {
         label: string;
         description: string | null;
       }
-    | {__typename: 'SourceMetadataEntry'; label: string; description: string | null}
+    | {
+        __typename: 'SourceMetadataEntry';
+        label: string;
+        description: string | null;
+        sources: Array<{
+          __typename: 'SourceEntry';
+          key: string;
+          source: {__typename: 'LocalFileSource'; filePath: string; lineNumber: number};
+        }>;
+      }
     | {
         __typename: 'TableColumnLineageMetadataEntry';
         label: string;
