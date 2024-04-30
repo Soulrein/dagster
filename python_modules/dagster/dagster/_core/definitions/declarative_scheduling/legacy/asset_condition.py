@@ -1,8 +1,6 @@
-import datetime
 from dataclasses import dataclass
 from typing import (
     TYPE_CHECKING,
-    Optional,
     Sequence,
 )
 
@@ -97,55 +95,6 @@ class AssetCondition(SchedulingCondition):
             rule=AutoMaterializeRule.skip_on_not_all_parents_updated_since_cron(
                 cron_schedule, timezone
             )
-        )
-
-    @staticmethod
-    def any_deps_match(condition: "SchedulingCondition") -> "SchedulingCondition":
-        """Returns an AssetCondition that is true for an asset partition if at least one partition
-        of any of its dependencies evaluate to True for the given condition.
-        """
-        from ..operators.dep_operators import AnyDepsCondition
-
-        return AnyDepsCondition(operand=condition)
-
-    @staticmethod
-    def all_deps_match(condition: "SchedulingCondition") -> "SchedulingCondition":
-        """Returns an AssetCondition that is true for an asset partition if at least one partition
-        of all of its dependencies evaluate to True for the given condition.
-        """
-        from ..operators.dep_operators import AllDepsCondition
-
-        return AllDepsCondition(operand=condition)
-
-    @staticmethod
-    def materialized() -> "SchedulingCondition":
-        """Returns an AssetCondition that is true for an asset partition if it has been materialized."""
-        from ..operands.slice_conditions import MaterializedSchedulingCondition
-
-        return MaterializedSchedulingCondition()
-
-    @staticmethod
-    def in_progress() -> "SchedulingCondition":
-        """Returns an AssetCondition that is true for an asset partition if it is part of an in-progress run."""
-        from ..operands.slice_conditions import InProgressSchedulingCondition
-
-        return InProgressSchedulingCondition()
-
-    @staticmethod
-    def in_latest_time_window(
-        lookback_timedelta: Optional[datetime.timedelta] = None,
-    ) -> "SchedulingCondition":
-        """Returns an AssetCondition that is true for an asset partition when it is within the latest
-        time window.
-
-        Args:
-            lookback_timedelta (Optional, datetime.timedelta): If provided, the condition will
-                return all partitions within the provided delta of the end of the latest time window.
-        """
-        from ..operands.slice_conditions import InLatestTimeWindowCondition
-
-        return InLatestTimeWindowCondition(
-            lookback_seconds=lookback_timedelta.total_seconds() if lookback_timedelta else None
         )
 
 
