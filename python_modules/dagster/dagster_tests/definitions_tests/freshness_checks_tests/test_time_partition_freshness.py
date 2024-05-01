@@ -52,7 +52,7 @@ def test_params() -> None:
 
     check = build_time_partition_freshness_checks(
         assets=[my_partitioned_asset], deadline_cron="0 0 * * *"
-    )
+    )[0]
 
     assert isinstance(check, AssetChecksDefinition)
     assert next(iter(check.check_keys)).asset_key == my_partitioned_asset.key
@@ -79,20 +79,20 @@ def test_params() -> None:
 
     other_check = build_time_partition_freshness_checks(
         assets=[other_partitioned_asset], deadline_cron="0 0 * * *", timezone="UTC"
-    )
+    )[0]
     assert isinstance(other_check, AssetChecksDefinition)
     assert not check.node_def.name == other_check.node_def.name
 
     check = build_time_partition_freshness_checks(
         assets=[my_partitioned_asset.key], deadline_cron="0 0 * * *", timezone="UTC"
-    )
+    )[0]
     assert isinstance(check, AssetChecksDefinition)
     assert next(iter(check.check_keys)).asset_key == my_partitioned_asset.key
 
     src_asset = SourceAsset("source_asset")
     check = build_time_partition_freshness_checks(
         assets=[src_asset], deadline_cron="0 0 * * *", timezone="UTC"
-    )
+    )[0]
     assert isinstance(check, AssetChecksDefinition)
     assert {check_key.asset_key for check_key in check.check_keys} == {src_asset.key}
 
@@ -100,7 +100,7 @@ def test_params() -> None:
         assets=[my_partitioned_asset, src_asset],
         deadline_cron="0 0 * * *",
         timezone="UTC",
-    )
+    )[0]
     assert isinstance(check, AssetChecksDefinition)
     assert {check_key.asset_key for check_key in check.check_keys} == {
         my_partitioned_asset.key,
@@ -129,7 +129,7 @@ def test_params() -> None:
 
     check = build_time_partition_freshness_checks(
         assets=[my_multi_asset], deadline_cron="0 0 * * *", timezone="UTC"
-    )
+    )[0]
     assert isinstance(check, AssetChecksDefinition)
     assert {check_key.asset_key for check_key in check.check_keys} == set(my_multi_asset.keys)
 
@@ -155,7 +155,7 @@ def test_params() -> None:
     coercible_key = "blah"
     check = build_time_partition_freshness_checks(
         assets=[coercible_key], deadline_cron="0 0 * * *", timezone="UTC"
-    )
+    )[0]
     assert isinstance(check, AssetChecksDefinition)
     assert {check_key.asset_key for check_key in check.check_keys} == {
         AssetKey.from_coercible(coercible_key)
@@ -171,7 +171,7 @@ def test_params() -> None:
     regular_asset_key = AssetKey("regular_asset_key")
     check = build_time_partition_freshness_checks(
         assets=[regular_asset_key], deadline_cron="0 0 * * *", timezone="UTC"
-    )
+    )[0]
     assert isinstance(check, AssetChecksDefinition)
     assert next(iter(check.check_keys)).asset_key == regular_asset_key
 
@@ -193,11 +193,11 @@ def test_params() -> None:
     check_multiple_assets = build_time_partition_freshness_checks(
         assets=[my_partitioned_asset, my_other_partitioned_asset],
         deadline_cron="0 9 * * *",
-    )
+    )[0]
     check_multiple_assets_switched_order = build_time_partition_freshness_checks(
         assets=[my_partitioned_asset, my_other_partitioned_asset],
         deadline_cron="0 9 * * *",
-    )
+    )[0]
     assert check_multiple_assets.node_def.name == check_multiple_assets_switched_order.node_def.name
     unique_id = unique_id_from_asset_keys(
         [my_partitioned_asset.key, my_other_partitioned_asset.key]
@@ -228,7 +228,7 @@ def test_result_cron_param(
         assets=[my_asset],
         deadline_cron="0 9 * * *",  # 09:00 UTC
         timezone="UTC",
-    )
+    )[0]
 
     freeze_datetime = start_time
     with pendulum_freeze_time(freeze_datetime):
@@ -344,7 +344,7 @@ def test_invalid_runtime_assets(
 
     check = build_time_partition_freshness_checks(
         assets=[non_partitioned_asset], deadline_cron="0 9 * * *", timezone="UTC"
-    )
+    )[0]
 
     with pytest.raises(CheckError, match="not a TimeWindowPartitionsDefinition"):
         assert_check_result(
@@ -361,7 +361,7 @@ def test_invalid_runtime_assets(
 
     check = build_time_partition_freshness_checks(
         assets=[static_partitioned_asset], deadline_cron="0 9 * * *", timezone="UTC"
-    )
+    )[0]
 
     with pytest.raises(CheckError, match="not a TimeWindowPartitionsDefinition"):
         assert_check_result(
@@ -389,7 +389,7 @@ def test_observations(
         assets=[my_asset],
         deadline_cron="0 9 * * *",
         timezone="UTC",  # 09:00 UTC
-    )
+    )[0]
 
     with pendulum_freeze_time(pendulum.datetime(2021, 1, 3, 1, 0, 0, tz="UTC")):
         add_new_event(instance, my_asset.key, "2021-01-01", is_materialization=False)
@@ -431,7 +431,7 @@ def test_differing_timezones(
         assets=[my_chicago_asset],
         deadline_cron="0 9 * * *",
         timezone="America/Los_Angeles",  # 09:00 Los Angeles time
-    )
+    )[0]
 
     # Start in a neutral hour in all timezones, such that the cron is on the same tick for all, and add a new event. expect the check to pass.
     # Current time is 2021-01-03 at 01:00:00 in America/Chicago, 2021-01-03 at 02:00:00 in America/New_York, and 2021-01-03 at 00:00:00 in America/Los_Angeles
@@ -526,7 +526,7 @@ def test_subset_freshness_checks(instance: DagsterInstance):
         assets=[my_asset, my_other_asset],
         deadline_cron="0 9 * * *",
         timezone="UTC",  # 09:00 UTC
-    )
+    )[0]
     single_check_job = define_asset_job(
         "the_job", selection=AssetChecksForAssetKeysSelection(selected_asset_keys=[my_asset.key])
     )
@@ -579,7 +579,7 @@ def test_observation_descriptions(
     check = build_time_partition_freshness_checks(
         assets=[my_asset],
         deadline_cron="0 9 * * *",
-    )
+    )[0]
     # First, create an event that is outside of the allowed time window.
     with pendulum_freeze_time(pendulum.datetime(2021, 1, 1, 1, 0, 0, tz="UTC")):
         add_new_event(instance, my_asset.key, is_materialization=False, partition_key="2021-01-01")
