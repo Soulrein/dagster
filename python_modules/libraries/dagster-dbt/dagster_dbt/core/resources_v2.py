@@ -773,12 +773,13 @@ class DbtCliInvocation:
                 while True:
                     all_done = True
                     for f in [dbt_run, *output_events]:
-                        if f.done():
-                            exc = f.exception()
-                            if exc:
-                                raise exc
-                        else:
-                            all_done = False
+                        if isinstance(f, Future):
+                            if f.done():
+                                exc = f.exception()
+                                if exc:
+                                    raise exc
+                            else:
+                                all_done = False
 
                     if all_done and output_events_idx >= len(output_events):
                         break
