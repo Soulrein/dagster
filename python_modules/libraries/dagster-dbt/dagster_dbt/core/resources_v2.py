@@ -828,29 +828,29 @@ class DbtCliInvocation:
 
                 dbt_run_thread = executor.submit(stream_dbt_events_and_enqueue_postprocessing)
 
-                current_event_idx = 0
+                event_to_emit_idx = 0
                 while True:
                     all_work_complete = get_future_completion_state_or_err(
                         [dbt_run_thread, *output_events_and_futures]
                     )
-                    if all_work_complete and current_event_idx >= len(output_events_and_futures):
+                    if all_work_complete and event_to_emit_idx >= len(output_events_and_futures):
                         break
 
-                    if current_event_idx < len(output_events_and_futures):
-                        current_event_or_future = output_events_and_futures[current_event_idx]
+                    if event_to_emit_idx < len(output_events_and_futures):
+                        event_to_emit = output_events_and_futures[event_to_emit_idx]
 
-                        if isinstance(current_event_or_future, Future):
+                        if isinstance(event_to_emit, Future):
                             # If the next event to emit is a Future (waiting on postprocessing),
                             # we need to wait for it to complete before yielding the event.
                             try:
-                                event = current_event_or_future.result(timeout=0.1)
+                                event = event_to_emit.result(timeout=0.1)
                                 yield event
-                                current_event_idx += 1
+                                event_to_emit_idx += 1
                             except:
                                 pass
                         else:
-                            yield current_event_or_future
-                            current_event_idx += 1
+                            yield event_to_emit
+                            event_to_emit_idx += 1
 
     @public
     def stream_raw_events(self) -> Iterator[DbtCliEventMessage]:
