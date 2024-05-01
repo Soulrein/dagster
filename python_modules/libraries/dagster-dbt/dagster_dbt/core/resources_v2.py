@@ -6,6 +6,7 @@ import signal
 import subprocess
 import sys
 import uuid
+from abc import ABC, abstractmethod
 from argparse import Namespace
 from concurrent.futures import Future, ThreadPoolExecutor
 from contextlib import suppress
@@ -97,6 +98,7 @@ from ..utils import (
     ASSET_RESOURCE_TYPES,
     get_dbt_resource_props_by_dbt_unique_id_from_manifest,
 )
+from .utils import get_future_completion_state_or_err
 
 logger = get_dagster_logger()
 
@@ -509,6 +511,68 @@ class DbtCliEventMessage:
             )
 
 
+DbtDagsterEventType = Union[Output, AssetMaterialization, AssetCheckResult, AssetObservation]
+
+
+class DbtPostprocessingAsyncTask(ABC):
+    """Represents a postprocessing step which should be run once a dbt asset has been materialized.
+    This step can be used to gather additional metadata about the asset.
+    """
+
+    @abstractmethod
+    def should_run_on(
+        self,
+        invocation: "DbtCliInvocation",
+        event: DbtDagsterEventType,
+        dbt_resource_props: Dict[str, Any],
+    ) -> bool:
+        """Determines whether this postprocessing function needs to run on the given event."""
+
+    @abstractmethod
+    def run(
+        self,
+        invocation: "DbtCliInvocation",
+        event: DbtDagsterEventType,
+        dbt_resource_props: Dict[str, Any],
+    ) -> Optional[Dict[str, Any]]:
+        """Runs the postprocessing function on the given event, returning any additional metadata
+        to attach to the event.
+        """
+
+
+class RowCountPostprocessingTask(DbtPostprocessingAsyncTask):
+    def should_run_on(
+        self,
+        invocation: "DbtCliInvocation",
+        event: DbtDagsterEventType,
+        dbt_resource_props: Dict[str, Any],
+    ) -> bool:
+        return isinstance(event, (Output, AssetMaterialization))
+
+    def run(
+        self,
+        invocation: "DbtCliInvocation",
+        event: DbtDagsterEventType,
+        dbt_resource_props: Dict[str, Any],
+    ) -> Optional[Dict[str, Any]]:
+        unique_id = dbt_resource_props["unique_id"]
+        table_str = f"{dbt_resource_props['database']}.{dbt_resource_props['schema']}.{dbt_resource_props['name']}"
+
+        adapter = check.not_none(invocation.adapter)
+        with adapter.connection_named(f"row_count_{unique_id}"):
+            query_result = adapter.execute(
+                f"""
+                    SELECT
+                    count(*)
+                    FROM
+                    {table_str}
+                """,
+                fetch=True,
+            )
+        row_count = query_result[1][0][0]
+        return dict(TableMetadataSet(row_count=row_count))
+
+
 @dataclass
 class DbtCliInvocation:
     """The representation of an invoked dbt command.
@@ -532,6 +596,7 @@ class DbtCliInvocation:
         init=False, default=DAGSTER_DBT_TERMINATION_TIMEOUT_SECONDS
     )
     adapter: Optional[BaseAdapter] = field(default=None)
+    postprocessing_tasks: Optional[List[DbtPostprocessingAsyncTask]] = field(default=None)
     _stdout: List[str] = field(init=False, default_factory=list)
     _error_messages: List[str] = field(init=False, default_factory=list)
     stream_events_threadpool_size: int = field(init=False, default=4)
@@ -548,6 +613,7 @@ class DbtCliInvocation:
         raise_on_error: bool,
         context: Optional[OpExecutionContext],
         adapter: Optional[BaseAdapter],
+        postprocessing_tasks: Optional[List[DbtPostprocessingAsyncTask]],
     ) -> "DbtCliInvocation":
         # Attempt to take advantage of partial parsing. If there is a `partial_parse.msgpack` in
         # in the target folder, then copy it to the dynamic target path.
@@ -590,6 +656,7 @@ class DbtCliInvocation:
             raise_on_error=raise_on_error,
             context=context,
             adapter=adapter,
+            postprocessing_tasks=postprocessing_tasks,
         )
         logger.info(f"Running dbt command: `{dbt_cli_invocation.dbt_command}`.")
 
@@ -656,11 +723,9 @@ class DbtCliInvocation:
                 target_path=self.target_path,
             )
 
-    def _get_dbt_resource_props_from_event(
-        self, event: Union[Output, AssetMaterialization]
-    ) -> Optional[Dict[str, Any]]:
+    def _get_dbt_resource_props_from_event(self, event: DbtDagsterEventType) -> Dict[str, Any]:
         unique_id = cast(TextMetadataValue, event.metadata["unique_id"]).text
-        return self.manifest["nodes"].get(unique_id)
+        return check.not_none(self.manifest["nodes"].get(unique_id))
 
     @public
     def stream(
@@ -701,111 +766,91 @@ class DbtCliInvocation:
         # We keep a list of emitted Dagster events and pending futures which augment
         # emitted events with additional metadata. This ensures we can yield events in the order
         # they are emitted by dbt.
-        output_events: List[
-            Union[Future, Output, AssetMaterialization, AssetObservation, AssetCheckResult]
-        ] = []
+        output_events_and_futures: List[Union[Future, DbtDagsterEventType]] = []
 
         with pushd(str(self.project_dir)):
             with ThreadPoolExecutor(max_workers=self.stream_events_threadpool_size) as executor:
 
-                def query_row_count(
-                    event: Union[AssetMaterialization, Output],
-                ) -> Union[AssetMaterialization, Output]:
-                    """Postprocessing task which queries the row count of the materialized table and
-                    attaches this information to the event as metadata.
+                def run_postprocessing_tasks(
+                    steps: List[DbtPostprocessingAsyncTask],
+                    event: Union[AssetMaterialization, Output, AssetCheckResult, AssetObservation],
+                ) -> Union[AssetMaterialization, Output, AssetCheckResult, AssetObservation]:
+                    """Threaded task which runs any postprocessing steps on the given event before it's
+                    emitted to user code.
+
+                    This is used to, for example, query the row count of a table after it has been
+                    materialized by dbt.
                     """
-                    dbt_resource_props = check.not_none(
-                        self._get_dbt_resource_props_from_event(event)
-                    )
-                    unique_id = dbt_resource_props["unique_id"]
+                    dbt_resource_props = self._get_dbt_resource_props_from_event(event)
 
-                    table_str = f"{dbt_resource_props['database']}.{dbt_resource_props['schema']}.{dbt_resource_props['name']}"
+                    additional_metadata = {}
+                    for step in steps:
+                        additional_metadata = {
+                            **additional_metadata,
+                            **(step.run(self, event, dbt_resource_props) or {}),
+                        }
 
-                    adapter = check.not_none(self.adapter)
-
-                    import time
-
-                    time.sleep(2)
-                    with adapter.connection_named(f"row_count_{unique_id}"):
-                        query_result = adapter.execute(
-                            f"""
-                                SELECT
-                                count(*)
-                                FROM
-                                {table_str}
-                            """,
-                            fetch=True,
-                        )
-                    row_count = query_result[1][0][0]
-                    new_metadata = {**event.metadata, **TableMetadataSet(row_count=row_count)}
                     if isinstance(event, Output):
                         return Output(
                             value=event.value,
                             output_name=event.output_name,
+                            metadata={**event.metadata, **additional_metadata},
                             data_version=event.data_version,
-                            metadata=new_metadata,
                         )
                     else:
-                        return event._replace(metadata=new_metadata)
+                        return event._replace(metadata={**event.metadata, **additional_metadata})
 
                 def stream_dbt_events_and_enqueue_postprocessing() -> None:
                     """Task which streams dbt events and either directly places them in
-                    the output_events list or enqueues post-processing tasks where needed.
+                    the output_events list to be emitted to user code, or enqueues post-processing tasks
+                    where needed.
                     """
                     for event in self._stream_asset_events():
-                        # For any table output, we enqueue a task to query the row count
-                        # which is attached to the materialization event before it's yielded
-                        if isinstance(event, (AssetMaterialization, Output)):
-                            output_events.append(
+                        # For any table output, we check if there are any postprocessing steps
+                        # that need to be run before emitting the event.
+                        tasks_to_run = [
+                            task
+                            for task in (self.postprocessing_tasks or [])
+                            if task.should_run_on(
+                                self, event, self._get_dbt_resource_props_from_event(event)
+                            )
+                        ]
+                        if tasks_to_run:
+                            output_events_and_futures.append(
                                 executor.submit(
-                                    query_row_count,
+                                    run_postprocessing_tasks,
+                                    tasks_to_run,
                                     event,
                                 )
                             )
                         else:
-                            output_events.append(event)
+                            output_events_and_futures.append(event)
 
-                dbt_run = executor.submit(stream_dbt_events_and_enqueue_postprocessing)
+                dbt_run_thread = executor.submit(stream_dbt_events_and_enqueue_postprocessing)
 
-                # monitor the queue and yield events as they are put into it
-                output_events_idx = 0
-
+                current_event_idx = 0
                 while True:
-                    all_done = True
-                    for f in [dbt_run, *output_events]:
-                        if isinstance(f, Future):
-                            if f.done():
-                                exc = f.exception()
-                                if exc:
-                                    raise exc
-                            else:
-                                all_done = False
-
-                    if all_done and output_events_idx >= len(output_events):
+                    all_work_complete = get_future_completion_state_or_err(
+                        [dbt_run_thread, *output_events_and_futures]
+                    )
+                    if all_work_complete and current_event_idx >= len(output_events_and_futures):
                         break
 
-                    if output_events_idx < len(output_events):
-                        event_or_future = output_events[output_events_idx]
-                        if isinstance(event_or_future, Future):
+                    if current_event_idx < len(output_events_and_futures):
+                        current_event_or_future = output_events_and_futures[current_event_idx]
+
+                        if isinstance(current_event_or_future, Future):
+                            # If the next event to emit is a Future (waiting on postprocessing),
+                            # we need to wait for it to complete before yielding the event.
                             try:
-                                event = event_or_future.result(timeout=0.1)
+                                event = current_event_or_future.result(timeout=0.1)
                                 yield event
-                                output_events_idx += 1
+                                current_event_idx += 1
                             except:
                                 pass
                         else:
-                            yield event_or_future
-                            output_events_idx += 1
-
-                # for event in self.stream_inner():
-                #     if isinstance(event, AssetMaterialization):
-                #         # enqueue querying row count of the materialized table
-                #         executor.submit(
-                #             self._query_row_count,
-                #             event,
-                #         )
-
-                #     yield event
+                            yield current_event_or_future
+                            current_event_idx += 1
 
     @public
     def stream_raw_events(self) -> Iterator[DbtCliEventMessage]:
@@ -1296,6 +1341,7 @@ class DbtCliResource(ConfigurableResource):
         dagster_dbt_translator: Optional[DagsterDbtTranslator] = None,
         context: Optional[Union[OpExecutionContext, AssetExecutionContext]] = None,
         target_path: Optional[Path] = None,
+        postprocessing_tasks: Optional[List[DbtPostprocessingAsyncTask]] = None,
     ) -> DbtCliInvocation:
         """Create a subprocess to execute a dbt CLI command.
 
@@ -1525,6 +1571,7 @@ class DbtCliResource(ConfigurableResource):
                 raise_on_error=raise_on_error,
                 context=context,
                 adapter=adapter,
+                postprocessing_tasks=postprocessing_tasks,
             )
 
 
